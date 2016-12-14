@@ -1,0 +1,19 @@
+la_ticketing_info:
+    path:     /info
+    defaults: { _controller: LATicketingBundle:Ticketing:info }
+
+la_ticketing_command:
+    path:     /command/create
+    defaults: { _controller: LATicketingBundle:Ticketing:commandCreate }
+
+la_ticketing_buy:
+    path:     /command/{id}/buy
+    defaults: { _controller: LATicketingBundle:Ticketing:commandBuy }
+
+la_ticketing_confirm:
+    path:     /command/{id}/confirm
+    defaults: { _controller: LATicketingBundle:Ticketing:commandConfirm }
+
+la_ticketing_ticket_pdf:
+    path:     /ticket/{id}
+    defaults: { _controller: LATicketingBundle:Ticketing:generatePdf }

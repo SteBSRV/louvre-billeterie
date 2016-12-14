@@ -1,0 +1,92 @@
+{# src/LA/AppBundle/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <title>{% block title %}Musée du Louvre{% endblock %}</title>
+
+    {% block stylesheets %}
+      {# On charge le CSS de bootstrap depuis le site directement #}
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      {% stylesheets 'bundles/laapp/css/agency.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+      {% endstylesheets %}
+
+    {% endblock %}
+  </head>
+
+  <body id="page-top" class="index">
+  <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Musée du Louvre</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a href="{{ path('la_app_homepage') }}">Accueil</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('la_ticketing_info') }}">Tarifs - Informations</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('la_ticketing_command') }}">Commander des tickets</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('la_app_contact') }}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Musée du Louvre</div>
+                <div class="intro-heading">Achat en ligne de billet pour le musée du Louvre.</div>
+                <a href="{{ path('la_ticketing_command') }}" class="btn btn-xl">Commander :)</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+    <div class="row">
+      <div id="content" class="col-md-9">
+        {% block body %}
+        {% endblock %}
+      </div>
+      <div id="left-widget" class="col-md-3 ticket-stats">
+        {{ render(controller("LATicketingBundle:Ticketing:stats")) }}
+      </div>
+    </div>
+
+    <footer>
+      <p>Musée du Louvre © {{ 'now'|date('Y') }}</p>
+    </footer>
+  </div>
+
+  {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+  {% endblock %}
+
+  </body>
+</html>

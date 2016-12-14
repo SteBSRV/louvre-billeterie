@@ -1,0 +1,22 @@
+{% extends "LAAppBundle::layout.html.twig" %}
+
+{% block title %}
+  Billeterie - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Informations</h2>
+
+  {% for message in app.session.flashbag.get('info') %}
+    <div class="alert alert-info">Message flash : {{ message }}</div>
+  {% endfor %}
+
+  <div>
+  	<h3>Tarifs :</h3>
+
+
+  	<!-- boucle for in sur les prix -->
+  </div>
+
+{% endblock %}

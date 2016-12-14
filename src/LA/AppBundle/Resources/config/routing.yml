@@ -1,0 +1,7 @@
+la_app_homepage:
+    path:     /
+    defaults: { _controller: LAAppBundle:App:index }
+
+la_app_contact:
+    path:     /contact/
+    defaults: { _controller: LAAppBundle:App:contact }

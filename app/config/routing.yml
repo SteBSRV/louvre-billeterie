@@ -1,0 +1,7 @@
+la_ticketing:
+    resource: "@LATicketingBundle/Resources/config/routing.yml"
+    prefix:   /
+
+la_app:
+    resource: "@LAAppBundle/Resources/config/routing.yml"
+    prefix:   /

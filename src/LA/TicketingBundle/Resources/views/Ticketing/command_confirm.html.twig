@@ -1,0 +1,33 @@
+{% extends "LAAppBundle::layout.html.twig" %}
+
+{% block title %}
+  Billeterie - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Achat</h2>
+
+  {% for message in app.session.flashbag.get('info') %}
+    <div class="alert alert-info">Message flash : {{ message }}</div>
+  {% endfor %}
+
+   <h3>Récapitulatif de votre commande : </h3>
+
+  <div id="command-view">
+  	<div>
+  		<li>Réservé par : {{ command.name }} {{ command.firstName }}</li>
+  		<li>Nombre de billets : {{ command.nbTickets }}</li>
+  		<li>Prix total : {{ command.amount // 100 }}€</li>
+  	</div>
+
+  	<div id="tickets-view">
+  		<h4>Liste des billets : </h4>
+  	  	{% for ticket in command.tickets %}
+  	  		<li>{{ ticket.name }} {{ ticket.firstName }} : {{ ticket.price // 100 }}€</li>
+  	  		<p>Billet au format PDF : <a href="{{ path('la_ticketing_ticket_pdf', {'id': ticket.id}) }}">PDF</a></p>
+  	  	{% endfor %}
+  	</div>
+  </div>
+
+{% endblock %}
