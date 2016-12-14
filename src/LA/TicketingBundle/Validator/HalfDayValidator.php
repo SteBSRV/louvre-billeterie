@@ -13,7 +13,7 @@ class HalfDayValidator extends ConstraintValidator
 		$now = new \DateTime('now');
 		$hour = $now->format('H');
 
-		if ($hour >= 14) {
+		if ($hour >= 14 && $value) {
 			$this->context->addViolation($constraint->message);
 		}
 	}
