@@ -5,6 +5,7 @@ namespace LA\TicketingBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="la_command")
@@ -21,43 +22,51 @@ class Command
 
   /**
    * @ORM\Column(name="name", type="string", length=255)
+   * @Assert\NotBlank()
    */
   protected $name;
 
   /**
    * @ORM\Column(name="first_name", type="string", length=255)
+   * @Assert\NotBlank()
    */
   protected $firstName;
 
   /**
    * @ORM\Column(name="mail", type="string", length=255)
+   * @Assert\Email()
    */
   protected $mail;
 
   /**
    * @ORM\Column(name="nb_tickets", type="integer", nullable=true)
+   * @Assert\Type("integer")
    */
   protected $nbTickets;
 
   /**
    * @
    * @ORM\Column(name="amount", type="integer", nullable=true)
+   * @Assert\Type("integer")
    */
   protected $amount;
 
   /**
    * @ORM\Column(name="date", type="datetime")
+   * @Assert\DateTime()
    */
   protected $date;
 
   /**
    * @ORM\Column(name="valid", type="boolean", nullable=true)
+   * @Assert\Type("bool")
    */
   protected $valid;
 
   /**
    * @var ArrayCollection
    * @ORM\OneToMany(targetEntity="LA\TicketingBundle\Entity\Ticket", mappedBy="command", cascade={"persist"})
+   * @Assert\NotBlank()
    */
   protected $tickets;
 

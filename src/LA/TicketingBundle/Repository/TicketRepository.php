@@ -17,14 +17,15 @@ class TicketRepository extends \Doctrine\ORM\EntityRepository
 
 		$qb = $this
 			->createQueryBuilder('t')
+			->select('COUNT(t)')
 			->leftJoin('t.command', 'c')
-			->addSelect('c')
 			->where('c.date >= :start_day')
 			->andWhere('c.date <= :end_day')
+			->andWhere('t.validationCode IS NOT NULL')
 			->setParameter('start_day', $startDay)
 			->setParameter('end_day', $endDay)
 		;
 
-		return $qb->getQuery()->getResult();
+		return $qb->getQuery()->getSingleScalarResult();
 	}
 }

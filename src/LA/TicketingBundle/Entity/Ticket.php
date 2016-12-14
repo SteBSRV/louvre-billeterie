@@ -4,6 +4,7 @@
 namespace LA\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="la_ticket")
@@ -26,53 +27,62 @@ class Ticket
 
   /**
    * @ORM\Column(name="name", type="string", length=255)
+   * @Assert\NotBlank()
    */
   protected $name;
 
   /**
    * @ORM\Column(name="first_name", type="string", length=255)
+   * @Assert\NotBlank()
    */
   protected $firstName;
 
   /**
    * @ORM\Column(name="birth_date", type="date")
+   * @Assert\DateTime()
    */
   protected $birthDate;
 
   /**
    * @ORM\Column(name="country", type="string")
+   * @Assert\Type("string")
    */
   protected $country;
 
   /**
    * @ORM\Column(name="type", type="boolean")
+   * @Assert\Type("bool")
    */
   protected $type;
 
   /**
    * @ORM\Column(name="reduced", type="boolean")
+   * @Assert\Type("bool")
    */
   protected $reduced;
 
   /**
    * @ORM\Column(name="price", type="integer")
-   * @ORM\JoinColumn(nullable=false)
+   * @Assert\Type("integer")
    */
   protected $price;
 
   /**
    * @ORM\ManyToOne(targetEntity="LA\TicketingBundle\Entity\Command", inversedBy="tickets", cascade={"persist"})
    * @ORM\JoinColumn(name="Command_id", referencedColumnName="id")
+   * @Assert\Type("object")
    */
   protected $command;
 
   /**
    * @ORM\Column(name="visit_date", type="date")
+   * @Assert\DateTime()
    */
   protected $visitDate;
 
   /**
    * @ORM\Column(name="validation_code", type="string", nullable=true)
+   * @Assert\Type("string")
    */
   protected $validationCode;
 

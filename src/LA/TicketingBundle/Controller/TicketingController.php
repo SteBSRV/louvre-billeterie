@@ -175,7 +175,7 @@ class TicketingController extends Controller
 
         // Affichage des stats
         return $this->render('LATicketingBundle:Ticketing:stats.html.twig', array(
-            'tickets' => $todayTickets
+            'nbTicket' => $todayTickets
             )
         );
     }
