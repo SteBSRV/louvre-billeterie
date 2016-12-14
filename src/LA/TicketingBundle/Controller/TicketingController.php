@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use LA\TicketingBundle\Entity\Command;
 use LA\TicketingBundle\Entity\Ticket;
-use LA\TicketingBundle\Form\CommandType;
+use LA\TicketingBundle\Form\Type\CommandType;
 
 class TicketingController extends Controller
 {

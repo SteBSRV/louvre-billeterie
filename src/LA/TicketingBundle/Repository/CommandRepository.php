@@ -2,6 +2,8 @@
 
 namespace LA\TicketingBundle\Repository;
 
+use LA\TicketingBundle\Entity\Command;
+
 /**
  * CommandRepository
  *

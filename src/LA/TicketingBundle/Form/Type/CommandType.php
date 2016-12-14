@@ -1,7 +1,7 @@
 <?php
-// src/LA/TicketingBundle/Form/CommandType.php
+// src/LA/TicketingBundle/Form/Type/CommandType.php
 
-namespace LA\TicketingBundle\Form;
+namespace LA\TicketingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use LA\TicketingBundle\Form\TicketType;
+use LA\TicketingBundle\Form\Type\TicketType;
 
 
 class CommandType extends AbstractType
