@@ -5,7 +5,7 @@ namespace LA\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use LA\TicketingBundle\Validator\HalfDay;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 /**
  * @ORM\Table(name="la_ticket")
@@ -53,7 +53,6 @@ class Ticket
   /**
    * @ORM\Column(name="type", type="boolean")
    * @Assert\Type("bool")
-   * @HalfDay()
    */
   protected $type;
 
@@ -361,5 +360,25 @@ class Ticket
     public function getReduced()
     {
         return $this->reduced;
+    }
+
+    /**
+     *
+     * @param ExecutionContextInterface $context
+     *
+     * @Assert\Callback
+     */
+    public function isTypeValid(ExecutionContext $context)
+    {
+        $message = "Vous ne pouvez plus réserver de billet Journée pour le jour même une fois 14h passé, vous pouvez cependant toujours réserver un billet Demi-journée";
+
+        $now = new \DateTime('now');
+        $today = $now->format('Y-m-d');
+        $hour = $now->format('H');
+        $visitDate = $this->visitDate->format('Y-m-d');
+
+        if ($hour >= 14 && $this->type && ($visitDate == $today)) {
+            $context->buildViolation($message)->atPath('type')->addViolation();
+        }
     }
 }
