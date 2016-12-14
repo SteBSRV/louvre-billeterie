@@ -22,19 +22,20 @@ class Command
 
   /**
    * @ORM\Column(name="name", type="string", length=255)
-   * @Assert\NotBlank()
+   * @Assert\NotBlank(message="Veuillez entrer un nom.")
    */
   protected $name;
 
   /**
    * @ORM\Column(name="first_name", type="string", length=255)
-   * @Assert\NotBlank()
+   * @Assert\NotBlank(message="Veuillez entrer un prénom.")
    */
   protected $firstName;
 
   /**
    * @ORM\Column(name="mail", type="string", length=255)
-   * @Assert\Email()
+   * @Assert\NotBlank(message="Veuillez entrer un prénom.")
+   * @Assert\Email(message="Veuillez saisir une adresse mail valide.")
    */
   protected $mail;
 
@@ -67,6 +68,7 @@ class Command
    * @var ArrayCollection
    * @ORM\OneToMany(targetEntity="LA\TicketingBundle\Entity\Ticket", mappedBy="command", cascade={"persist"})
    * @Assert\NotBlank()
+   * @Assert\Valid()
    */
   protected $tickets;
 

@@ -5,6 +5,7 @@ namespace LA\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use LA\TicketingBundle\Validator\HalfDay;
 
 /**
  * @ORM\Table(name="la_ticket")
@@ -52,6 +53,7 @@ class Ticket
   /**
    * @ORM\Column(name="type", type="boolean")
    * @Assert\Type("bool")
+   * @HalfDay()
    */
   protected $type;
 
@@ -77,6 +79,7 @@ class Ticket
   /**
    * @ORM\Column(name="visit_date", type="date")
    * @Assert\DateTime()
+   * @Assert\GreaterThanOrEqual("today")
    */
   protected $visitDate;
 

@@ -24,16 +24,19 @@ class TicketType extends AbstractType
             ->add('name',      TextType::class, array('label'     => 'Nom'))
             ->add('firstName', TextType::class, array('label'     => 'Prénom'))
             ->add('birthDate', BirthdayType::class, array('label' => 'Date de naissance'))
-            ->add('country',   CountryType::class, array('label'  => 'Nationalité'))
+            ->add('country',   CountryType::class, array(
+                'label'             => 'Nationalité',
+                'preferred_choices' => array('FR'))
+            )
             ->add('type',      ChoiceType::class, array(
                 'choices'  => array(
-                    'half' => false,
-                    'day'  => true,
+                    'Journée' => true,
+                    'Demi-Journée'  => false
                     ),
                 'label'    => 'Durée'
                 ))
             ->add('reduced',   CheckboxType::class, array('required' => false,'label' => 'Tarif réduit'))
-            ->add('visitDate', DateType::class, array('label' => 'Date de visite'))
+            ->add('visitDate', DateType::class, array('label' => 'Date de visite', 'data' => new \Datetime()))
         ;
     }
     
