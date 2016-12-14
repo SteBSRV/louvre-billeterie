@@ -381,4 +381,25 @@ class Ticket
             $context->buildViolation($message)->atPath('type')->addViolation();
         }
     }
+
+    /**
+     *
+     * @param ExecutionContextInterface $context
+     *
+     * @Assert\Callback
+     */
+    public function isVisitDateValid(ExecutionContext $context)
+    {
+        $message = "Impossible de réserver ce jour, le musée étant fermé.";
+
+        $visitDate = $this->visitDate->format('m-d');
+        $closedDay = array('05-01','11-01','12-25');
+
+        $visitDay = $this->visitDate->format('N');
+
+        if ($visitDay == 2 || in_array($visitDate, $closedDay)) {
+            $context->buildViolation($message)->atPath('visitDate')->addViolation();
+        }
+
+    }
 }
