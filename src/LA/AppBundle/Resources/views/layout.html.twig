@@ -63,11 +63,11 @@
     <div class="container">
 
     <div class="row">
-      <div id="content" class="col-md-9">
+      <div id="content" class="col-sm-12 col-md-8">
         {% block body %}
         {% endblock %}
       </div>
-      <div id="right-widget" class="col-md-3 ticket-stats">
+      <div id="right-widget" class="col-md-4 ticket-stats hidden-sm hidden-xs">
         <h2>Actuellement</h2>
         {{ render(controller("LATicketingBundle:Ticketing:stats")) }}
       </div>
