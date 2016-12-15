@@ -17,22 +17,24 @@
     {% endfor %}
   {% endfor %}
 
-   <h3>Récapitulatif de votre commande : </h3>
-
-  <div id="command-view">
-  	<div>
-  		<li>Réservé par : {{ command.name }} {{ command.firstName }}</li>
-  		<li>Nombre de billets : {{ command.nbTickets }}</li>
-  		<li>Prix total : {{ command.amount // 100 }}€</li>
-  	</div>
-
-  	<div id="tickets-view">
-  		<h4>Liste des billets : </h4>
-  	  	{% for ticket in command.tickets %}
-  	  		<li>{{ ticket.name }} {{ ticket.firstName }} : {{ ticket.price // 100 }}€</li>
-  	  		<p>Billet au format PDF : <a href="{{ path('la_ticketing_ticket_pdf', {'id': ticket.id}) }}">PDF</a></p>
-  	  	{% endfor %}
-  	</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Commande {{ command.id }} :</h3>
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item">Réservé par : {{ command.name }} {{ command.firstName }}</li>
+        <li class="list-group-item">Nombre de billets : {{ command.nbTickets }}</li>
+        <li class="list-group-item">Prix total : {{ command.amount // 100 }}€</li>
+    </ul>
+  <div class="panel-heading">
+      <h3 class="panel-title">Liste des billets</h3>
+    </div>
+    <ul class="list-group">
+        {% for ticket in command.tickets %}
+        <li class="list-group-item"><span class="ticket-number">{{ loop.index }}</span>{{ ticket.name }} {{ ticket.firstName }} : {{ ticket.price // 100 }}€ <span class="badge"><a href="{{ path('la_ticketing_ticket_pdf', {'id': ticket.id}) }}">PDF</a></li>
+      {% endfor %}
+    </ul>
   </div>
+
 
 {% endblock %}

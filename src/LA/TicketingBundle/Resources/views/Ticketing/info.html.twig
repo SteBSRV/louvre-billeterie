@@ -12,11 +12,15 @@
     <div class="alert alert-info">Message flash : {{ message }}</div>
   {% endfor %}
 
-  <div>
-  	<h3>Tarifs :</h3>
-
-
-  	<!-- boucle for in sur les prix -->
+  <div class="panel panel-default">
+  	<div class="panel-heading">
+  	  <h3 class="panel-title">Tarifs :</h3>
+  	</div>
+  	<ul class="list-group">
+      {% for price in prices %}
+        <li class="list-group-item">Prix : {{ price / 100 }}€</li>
+      {% endfor %}
+    </ul>
   </div>
 
 {% endblock %}

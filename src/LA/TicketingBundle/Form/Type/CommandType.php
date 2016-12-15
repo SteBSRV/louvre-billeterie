@@ -31,7 +31,7 @@ class CommandType extends AbstractType
                 'allow_delete' => true,
                 'label'        => 'Liste des tickets'
             ))
-            ->add('Save',       SubmitType::class, array('label' => 'Valider'))
+            ->add('save',       SubmitType::class, array('label' => 'Valider'))
         ;
     }
     

@@ -17,11 +17,9 @@
     {% endfor %}
   {% endfor %}
 
-  <h3>Commande</h3>
-
   <div class="well">
     {{ form(form) }}
-    <a href="#" id="add-ticket" class="btn btn-default">Ajouter un ticket</a>
+     <a href="#" id="add-ticket" class="btn btn-primary">Ajouter un ticket</a>
   </div>
 
   <script type="text/javascript">
@@ -29,6 +27,9 @@
     var ticketCount = 0;
 
     jQuery(document).ready(function() {
+
+        ticketCount = 1;
+
         jQuery('#add-ticket').click(function(e) {
             e.preventDefault();
 
@@ -39,7 +40,7 @@
             // replace the "__name__" used in the id and name of the prototype
             // with a number that's unique to your emails
             // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget.replace(/__name__/g, ticketCount);
+            newWidget = newWidget.replace(/__name__/g, 'Ticket_' + ticketCount);
             newWidget = newWidget.replace(/label__/, '');
             ticketCount++;
 
@@ -47,6 +48,13 @@
             var newLi = jQuery('<li></li>').html(newWidget);
             newLi.appendTo(ticketsList);
         });
+
+      // Info for the reduced price
+      jQuery('#la_ticketingbundle_command_mail').click(function(e) {
+
+        jQuery('#la_ticketingbundle_command_mail').append('<p>Justificatif nécessaire pour les tarifs réduits</p>');
+      });
+
     })
 </script>
 

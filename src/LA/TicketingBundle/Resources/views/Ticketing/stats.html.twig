@@ -1,4 +1,9 @@
-<h3>Aujourd'hui :</h3>
-
-<li>Nombe de places vendues : {{ nbTicket }}</li>
-<li>Places restantes : {{ 1000 - nbTicket }}</li>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Aujourd'hui</h3>
+  </div>
+	<ul class="list-group">
+		<li class="list-group-item">Nombe de places vendues <span class="badge">{{ nbTicket }}</span></li>
+		<li class="list-group-item">Places restantes <span class="badge">{{ 1000 - nbTicket }}</span></li>
+	</ul>
+</div>

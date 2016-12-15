@@ -17,25 +17,27 @@
     {% endfor %}
   {% endfor %}
 
-  <h3>Récapitulatif de votre commande : </h3>
-
-  <div id="command-view">
-  	<div>
-  		<li>Réservé par : {{ command.name }} {{ command.firstName }}</li>
-  		<li>Nombre de billets : {{ command.nbTickets }}</li>
-  		<li>Prix total : {{ command.amount // 100 }}€</li>
+  <div class="panel panel-default">
+  	<div class="panel-heading">
+  	  <h3 class="panel-title">Commande {{ command.id }} :</h3>
   	</div>
-
-	<div id="tickets-view">
-		<h4>Liste des billets : </h4>
-	  	{% for ticket in command.tickets %}
-	  		<li>{{ ticket.name }} {{ ticket.firstName }} : {{ ticket.price // 100 }}€</li>
+  	<ul class="list-group">
+        <li class="list-group-item">Réservé par : {{ command.name }} {{ command.firstName }}</li>
+        <li class="list-group-item">Nombre de billets : {{ command.nbTickets }}</li>
+        <li class="list-group-item">Prix total : {{ command.amount // 100 }}€</li>
+    </ul>
+	<div class="panel-heading">
+  	  <h3 class="panel-title">Liste des billets</h3>
+  	</div>
+  	<ul class="list-group">
+        {% for ticket in command.tickets %}
+	  		<li class="list-group-item"><span class="ticket-number">{{ loop.index }}</span>{{ ticket.name }} {{ ticket.firstName }} : {{ ticket.price // 100 }}€</li>
 	  	{% endfor %}
-	</div>
+    </ul>
   </div>
 
 
-  <form class="stripe-button-container" method="POST">
+  <form class="stripe-button-container text-center" method="POST">
 	<script
 	src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 	data-key="pk_test_FKJS6IJ97uJrMv948ebz5Mx4"
@@ -48,5 +50,12 @@
 	data-currency="eur">
 	</script>
   </form>
+
+  <script type="text/javascript">
+  	jQuery(document).ready(function() {
+  		jQuery('.stripe-button-el').addClass('btn btn-primary stripe-button').removeClass('stripe-button-el');
+  		jQuery('.stripe-button span').text('Paiement par carte bancaire');
+  	})
+  </script>
 
 {% endblock %}
