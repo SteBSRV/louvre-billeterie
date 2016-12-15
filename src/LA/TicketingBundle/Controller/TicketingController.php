@@ -26,6 +26,15 @@ class TicketingController extends Controller
 
     public function commandCreateAction(Request $request)
     {
+        //
+        $ticketRepo = $this->getDoctrine()->getManager()->getRepository('LATicketingBundle:Ticket');
+
+        //
+        if ($ticketRepo->ticketsPerDay() >= 1000) {
+            $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
+            return $this->render('LATicketingBundle:Ticketing:command_full.html.twig');
+        }
+
         // Création d'une instance commande
         $command = new Command();
         // Création du formulaire destiné à hydrater l'instance $command
@@ -58,7 +67,6 @@ class TicketingController extends Controller
             // Sauvegarde en base
             $em->flush();
        
-
             // Message de confirmation de commande
             $request->getSession()->getFlashBag()->add('info','Commande valide.');
 
@@ -112,7 +120,7 @@ class TicketingController extends Controller
             $em->flush();
 
             // Confirmation
-            $request->getSession()->getFlashBag()->add('info', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
+            $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
             // Mail :
             $this->sendMailConfirm($command);
 
