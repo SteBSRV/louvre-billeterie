@@ -8,8 +8,24 @@
 
   <h2>Accueil</h2>
 
-  {% for message in app.session.flashbag.get('info') %}
-    <div class="alert alert-info">Message flash : {{ message }}</div>
+  {% for type, messages in app.session.flashbag.all %}
+    {% for message in messages %}
+      {%if type == 'error'%} {% set type = 'danger' %} {%endif%}
+        <div class="alert alert-{{ type }}">
+            {{ message|raw }}
+        </div>
+    {% endfor %}
   {% endfor %}
+
+  <div class="panel panel-default">
+  	<div class="panel-heading">
+  	  <h3 class="panel-title">Bienvenue</h3>
+  	</div>
+  	<div class="panel-body">
+  		<p style="text-indent: 60px;">
+  			Bienvenue sur le site du Musée du Louvre, vous trouverez ici les informations sur le musée (tarifs, horaire, contact etc...). Nous vous souhaitons une bonne visite sur notre site, en espérant vous retrouvez prochainement au musée.
+  		</p>
+  	</div>
+  </div>
 
 {% endblock %}

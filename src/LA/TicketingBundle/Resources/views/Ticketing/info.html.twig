@@ -8,17 +8,37 @@
 
   <h2>Informations</h2>
 
-  {% for message in app.session.flashbag.get('info') %}
-    <div class="alert alert-info">Message flash : {{ message }}</div>
+  {% for type, messages in app.session.flashbag.all %}
+    {% for message in messages %}
+      {%if type == 'error'%} {% set type = 'danger' %} {%endif%}
+        <div class="alert alert-{{ type }}">
+            {{ message|raw }}
+        </div>
+    {% endfor %}
   {% endfor %}
 
   <div class="panel panel-default">
   	<div class="panel-heading">
-  	  <h3 class="panel-title">Tarifs :</h3>
+  	  <h3 class="panel-title">Horaires :</h3>
   	</div>
   	<ul class="list-group">
-      {% for price in prices %}
-        <li class="list-group-item">Prix : {{ price / 100 }}€</li>
+      <li class="list-group-item">Lundi    : 09h00-18h00</li>
+      <li class="list-group-item"><strong>Mardi    : Fermé</strong></li>
+      <li class="list-group-item">Mercredi : 09h00-22h00</li>
+      <li class="list-group-item">Jeudi    : 09h00-18h00</li>
+      <li class="list-group-item">Vendredi : 09h00-22h00</li>
+      <li class="list-group-item">Samedi   : 09h00-18h00</li>
+      <li class="list-group-item">Dimanche : 09h00-18h00</li>
+    </ul>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Tarifs :</h3>
+    </div>
+    <ul class="list-group">
+      {% for price, type in prices %}
+        <li class="list-group-item">{{ type }}<br/>Prix : {{ price / 100 }}€</li>
       {% endfor %}
     </ul>
   </div>

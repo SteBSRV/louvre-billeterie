@@ -13,11 +13,11 @@ class TicketingController extends Controller
     public function infoAction()
     {
         // Array des différents tarifs
-        $prices[] = Ticket::PRICE_FREE;
-        $prices[] = Ticket::PRICE_KID;
-        $prices[] = Ticket::PRICE_REDUCED;
-        $prices[] = Ticket::PRICE_SENIOR;
-        $prices[] = Ticket::PRICE_NORMAL;
+        $prices[Ticket::PRICE_FREE] = 'Gratuit (jusqu\'à 4ans)';
+        $prices[Ticket::PRICE_KID] = 'Enfant (jusqu\'à 12 ans)';
+        $prices[Ticket::PRICE_REDUCED] = 'Réduit (nécessite un justificatif)';
+        $prices[Ticket::PRICE_SENIOR] = 'Sénior (à partir de 60 ans)';
+        $prices[Ticket::PRICE_NORMAL] = 'Normal';
 
         // Récupérer les tarifs : 'const'
         return $this->render('LATicketingBundle:Ticketing:info.html.twig', array(
