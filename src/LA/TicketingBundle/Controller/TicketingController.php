@@ -28,9 +28,10 @@ class TicketingController extends Controller
     {
         //
         $ticketRepo = $this->getDoctrine()->getManager()->getRepository('LATicketingBundle:Ticket');
+        $ticketsToday = $ticketRepo->ticketsPerDay();
 
         //
-        if ($ticketRepo->ticketsPerDay() >= 1000) {
+        if ($ticketsToday >= 1000) {
             $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
             return $this->render('LATicketingBundle:Ticketing:command_full.html.twig');
         }
@@ -44,6 +45,13 @@ class TicketingController extends Controller
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             // Rajout du nombre de tickets à la commande
             $command->setNbTickets();
+            $tempNbTickets = $ticketsToday + $command->getNbTickets();
+
+            if ($tempNbTickets >= 1000) {
+                $form = $this->get('form.factory')->create(CommandType::class, $command);
+                $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
+                return $this->render('LATicketingBundle:Ticketing:command_create.html.twig', array('form' => $form->createView()));
+            }
 
             // Récupération de l'entity manager
             $em = $this->getDoctrine()->getManager();
@@ -143,7 +151,7 @@ class TicketingController extends Controller
         $html = $this->renderView('LATicketingBundle:PDF:ticket.html.twig', array('ticket' => $ticket));
 
         // Création du PDF
-        $html2pdf = new \HTML2PDF('P',array('58','198'),'fr');
+        $html2pdf = new \HTML2PDF('P',array('58','208'),'fr');
         $html2pdf->writeHTML($html);
 
         // Retour du PDF au navigateur

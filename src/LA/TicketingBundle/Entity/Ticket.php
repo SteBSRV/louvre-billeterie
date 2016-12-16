@@ -78,7 +78,7 @@ class Ticket
   /**
    * @ORM\Column(name="visit_date", type="date")
    * @Assert\DateTime()
-   * @Assert\GreaterThanOrEqual("today")
+   * @Assert\GreaterThanOrEqual("today", message="Impossible de réserver pour un jour passé.")
    */
   protected $visitDate;
 
@@ -87,6 +87,12 @@ class Ticket
    * @Assert\Type("string")
    */
   protected $validationCode;
+
+  /**
+   * @ORM\Column(name="scan_terminated", type="boolean", nullable=true)
+   * @Assert\Type("bool")
+   */
+  protected $terminated = false;
 
   // Initialisation de la date de visite à aujourd'hui
   public function __construct()
@@ -258,6 +264,7 @@ class Ticket
     public function setValidationCode()
     {
         $validationCode = random_int(100000, 999999);
+        $validationCode = substr(md5($validationCode), 0, 10);
         $this->validationCode = $validationCode;
 
         return $this;
@@ -284,6 +291,10 @@ class Ticket
     {
         if ($this->reduced) {
             $this->price = $this::PRICE_REDUCED;
+            
+            if (!$this->type) {
+            $this->price = $this->price / 2;
+            }
 
             return $this;
         }
@@ -299,6 +310,10 @@ class Ticket
             $this->price = $this::PRICE_SENIOR;
         } else {
             $this->price = $this::PRICE_NORMAL;
+        }
+
+        if (!$this->type) {
+            $this->price = $this->price / 2;
         }
 
         return $this;
@@ -363,6 +378,30 @@ class Ticket
     }
 
     /**
+     * Set terminated
+     *
+     * @param boolean $terminated
+     *
+     * @return Ticket
+     */
+    public function setTerminated($terminated)
+    {
+        $this->terminated = $terminated;
+
+        return $this;
+    }
+
+    /**
+     * Get terminated
+     *
+     * @return boolean
+     */
+        public function getTerminated()
+    {
+        return $this->terminated;
+    }
+
+    /**
      *
      * @param ExecutionContextInterface $context
      *
@@ -390,15 +429,19 @@ class Ticket
      */
     public function isVisitDateValid(ExecutionContext $context)
     {
-        $message = "Impossible de réserver ce jour, le musée étant fermé.";
+        $messageClosed = "Impossible de réserver ce jour, le musée étant fermé.";
+        $messageForbidden = "Impossible de réserver ce jour, les résevations en ligne étant fermées pour les jours fériés et les dimanches";
 
-        $visitDate = $this->visitDate->format('m-d');
-        $closedDay = array('05-01','11-01','12-25');
+        $visitDate = $this->visitDate->format('d-m');
+        $closedDays = array('01-05','01-11','25-12');
+        $forbiddenDays = array('01-01','08-05','14-07','15-08','11-11');
 
         $visitDay = $this->visitDate->format('N');
 
-        if ($visitDay == 2 || in_array($visitDate, $closedDay)) {
-            $context->buildViolation($message)->atPath('visitDate')->addViolation();
+        if ($visitDay == 2 || in_array($visitDate, $closedDays)) {
+            $context->buildViolation($messageClosed)->atPath('visitDate')->addViolation();
+        } elseif ($visitDay == 7 || in_array($visitDate, $forbiddenDays)) {
+            $context->buildViolation($messageForbidden)->atPath('visitDate')->addViolation();
         }
 
     }

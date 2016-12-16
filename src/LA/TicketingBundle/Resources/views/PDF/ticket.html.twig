@@ -10,12 +10,14 @@
 	<img src="./bundles/laapp/img/logo-louvre.jpg" width="180"><br/>
 	<div id="qrcode" class="content-box">
 		<qrcode value="{{ ticket.validationCode }}" ec="H" style="width: 180px; background-color: white; color: black;"></qrcode>
-		{{ ticket.validationCode }}
+		<small>{{ ticket.validationCode }}</small>
 	</div>
 	<div id="visitor" class="content-box">
 		<h1>Musée du louvre</h1>
 		<span class="underline">Visiteur :</span><br/><br/>
 		<span><big>{{ ticket.name }} {{ ticket.firstName }}</big></span><br/><br/>
+		<span class="underline">Type de billet :</span><br/><br/>
+		<span><big>{% if ticket.type %}Journée{% else %}Demi-journée{% endif %}</big></span><br/><br/>
 		<span class="underline">Date de la visite :</span><br/><br/>
 		<span><big>{{ ticket.visitDate|date("d/m/Y") }}</big></span><br/><br/>
 		<span class="underline">Tarif :</span><br/><br/>
