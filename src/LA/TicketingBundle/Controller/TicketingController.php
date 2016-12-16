@@ -122,7 +122,7 @@ class TicketingController extends Controller
             // Confirmation
             $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
             // Mail :
-            $this->sendMailConfirm($command);
+            $this->get('la_ticketing.mailer')->sendCommandSuccess($command);
 
             // Confirmation
             return $this->redirectToRoute('la_ticketing_confirm', array('id' => $command->getId()));
@@ -136,24 +136,6 @@ class TicketingController extends Controller
     {
         // Confirmation de la commande (redirection suite au succès du paiement)
         return $this->render('LATicketingBundle:Ticketing:command_confirm.html.twig', array('command' => $command));
-    }
-
-    public function sendMailConfirm(Command $command)
-    {
-        // Création du mail à destination du propriétaire de la commande
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Confirmation de la réservation de vos places')
-            ->setFrom('xxx@xxx.xxx')
-            ->setTo($command->getMail())
-            ->setReplyTo('xxx@xxx.xxx')
-            ->setBody($this->renderView('LATicketingBundle:Ticketing:command_mail.html.twig', array('command' => $command)))
-            ->setContentType('text/html')
-        ;
-
-        // Envoi du message
-        $this->get('mailer')->send($message);
-
-        return;
     }
 
     public function generatePdfAction($id, Ticket $ticket)

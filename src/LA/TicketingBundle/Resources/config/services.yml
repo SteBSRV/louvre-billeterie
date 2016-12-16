@@ -1,4 +1,6 @@
 services:
-#    la_ticketing.example:
-#        class: LA\TicketingBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    la_ticketing.mailer:
+        class: LA\TicketingBundle\Services\Mailer
+        arguments:
+            - "@mailer"
+            - "@templating"
