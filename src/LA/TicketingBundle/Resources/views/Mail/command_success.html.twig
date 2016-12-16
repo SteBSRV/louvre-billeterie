@@ -1,0 +1,23 @@
+{# src/LA/TicketingBundle/Mail/command_success.html.twig #}
+
+  <h1>Louvre Billeterie</h1>
+
+  <h2>Récapitulatif de votre commande :</h2>
+
+  <div>
+    <ul>
+    	<li>Nom : {{ command.name }} {{ command.firstName }}</li>
+    	<li>Nombre de ticket : {{ command.nbTickets }}</li>
+    	<li>Prix total de la commande : {{ command.amount // 100 }}€</li>
+  </div>
+
+  <p>
+    Vous trouverez ci-dessous les liens pour télécharger vos billets :
+  </p>
+
+  {% for ticket in command.tickets %}
+    <p>
+      {{ ticket.name }} {{ ticket.firstName }} : 
+      <a href="{{ absolute_url(path('la_ticketing_ticket_pdf', {'id': ticket.id})) }}">Billet n°{{ loop.index }}</a>
+    </p>
+  {% endfor %}
