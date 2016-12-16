@@ -38,9 +38,37 @@
     </div>
     <ul class="list-group">
       {% for price, type in prices %}
-        <li class="list-group-item">{{ type }}<br/>Prix : {{ price / 100 }}€</li>
+        <li class="list-group-item price_{{ loop.index }}">{{ type }}<br/>Prix : {{ price / 100 }}€</li>
       {% endfor %}
     </ul>
   </div>
+
+  <!-- Modal -->
+<div id="modal-price" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Conditions et justificatis tarif réduit :</h4>
+      </div>
+      <div class="modal-body">
+          <p>Le billet tarif réduit est appliqué sous certaines conditions, à savoir les statuts suivant sont éligibles* à cette réduction : employé du musée, d’un service du Ministère de la Culture, militaire, étudiant, chercheur d'emploi...</p>
+          <small>* Sous réserve de présenter le justificatif adéqute (carte d'étudiant, statut pôle emploi, etc...).</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function (){
+    jQuery('.price_3').append(' - <a href="#" alt="plus d\'infos" data-toggle="modal" data-target="#modal-price">plus d\'informations</a>');
+  })
+</script>
 
 {% endblock %}

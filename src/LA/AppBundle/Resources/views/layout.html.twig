@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#222222">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <title>{% block title %}Musée du Louvre{% endblock %}</title>
@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
       {% endstylesheets %}
       {% stylesheets 'bundles/laapp/css/louvre.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+      {% endstylesheets %}
+      {% stylesheets 'bundles/laapp/css/font-awesome.min.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
       {% endstylesheets %}
     {% endblock %}
@@ -58,6 +61,12 @@
 
     <div id="header">
       <div class="container">
+        <div class="row">
+          <div id="header-content" class="col-md-4 col-md-offset-4">
+            <h1><strong>Billeterie en ligne</strong></h1>
+            <p><a href="{{ path('la_ticketing_command') }}" class="btn btn-default">Commander ></a></p>
+          </div>
+        </div>
       </div>
     </div>
 

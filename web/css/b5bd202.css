@@ -11,6 +11,13 @@
   height: 300px;
 }
 
+#header-content{
+  margin-top: 100px;
+  background: rgba(22, 22, 22, 0.5);
+  color: #ffffff;
+  border: 2px solid white;
+}
+
 .badge{
   background-color: #515151;
   color: #ffffff;
