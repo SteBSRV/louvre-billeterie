@@ -6,6 +6,22 @@
 
 {% block body %}
 
+	<style>
+    .google-maps {
+        position: relative;
+        padding-bottom: 75%; // This is the aspect ratio
+        height: 0;
+        overflow: hidden;
+    }
+    .google-maps iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+	</style>
+
   <h2>Contact</h2>
 
   <div class="well">
@@ -31,10 +47,9 @@
 	  		</p>
 	  	</div>
 	</div>
-	<div class="clo-md-8">
+	<div class="clo-md-8 google-maps">
 	  	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.87410236514!2d2.3354553162468488!3d48.86061107928769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d877937b0f%3A0xb975fcfa192f84d4!2sMus%C3%A9e+du+Louvre!5e0!3m2!1sfr!2sfr!4v1481904464179" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
 	</div>
   </div>
-
 
 {% endblock %}
