@@ -140,12 +140,11 @@ class TicketingController extends Controller
 
     public function generatePdfAction($id, Ticket $ticket)
     {
-        // Récupération du code de validation du billet
-        $validCode = $ticket->getValidationCode();
+        $html = $this->renderView('LATicketingBundle:PDF:ticket.html.twig', array('ticket' => $ticket));
 
         // Création du PDF
-        $html2pdf = new \HTML2PDF('P','A4','fr');
-        $html2pdf->writeHTML('<qrcode value="' . $validCode . '" ec="H" style="width: 50mm; background-color: white; color: black;">' . $validCode . '</qrcode>');
+        $html2pdf = new \HTML2PDF('P',array('58','198'),'fr');
+        $html2pdf->writeHTML($html);
 
         // Retour du PDF au navigateur
         $html2pdf->Output($ticket->getId() . '.pdf');

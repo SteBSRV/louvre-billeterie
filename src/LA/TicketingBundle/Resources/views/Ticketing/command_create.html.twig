@@ -47,14 +47,14 @@
             // create a new list element and add it to the list
             var newLi = jQuery('<li></li>').html(newWidget);
             newLi.appendTo(ticketsList);
+
+            // Info for the reduced price
+            jQuery('#la_ticketingbundle_command_tickets_Ticket_1_reduced').change(function() {
+              if ($(this).is(':checked')) {
+                alert('Justificatif nécessaire pour les tarifs réduits');
+              };
+            });
         });
-
-      // Info for the reduced price
-      jQuery('#la_ticketingbundle_command_mail').click(function(e) {
-
-        jQuery('#la_ticketingbundle_command_mail').append('<p>Justificatif nécessaire pour les tarifs réduits</p>');
-      });
-
     })
 </script>
 
