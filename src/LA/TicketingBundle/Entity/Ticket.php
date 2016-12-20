@@ -434,7 +434,18 @@ class Ticket
 
         $visitDate = $this->visitDate->format('d-m');
         $closedDays = array('01-05','01-11','25-12');
-        $forbiddenDays = array('01-01','08-05','14-07','15-08','11-11');
+
+        $year = $this->visitDate->format('Y');
+        $easterDate = new \DateTime();
+        $easterDate = $easterDate->setTimestamp(easter_date($year));
+        $easterMonday = $easterDate->modify('+1 day');
+        $easterMonday = $easterMonday->format('d-m');
+        $ascension = $easterDate->modify('+38 day');
+        $ascension = $ascension->format('d-m');
+        $pentecote = $easterDate->modify('+11 day');
+        $pentecote = $pentecote->format('d-m');
+
+        $forbiddenDays = array('01-01',$easterMonday,'08-05',$ascension,$pentecote,'14-07','15-08','11-11');
 
         $visitDay = $this->visitDate->format('N');
 
