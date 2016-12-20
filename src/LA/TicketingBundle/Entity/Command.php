@@ -62,7 +62,7 @@ class Command
    * @ORM\Column(name="valid", type="boolean", nullable=true)
    * @Assert\Type("bool")
    */
-  protected $valid;
+  protected $valid = false;
 
   /**
    * @var ArrayCollection

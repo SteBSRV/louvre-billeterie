@@ -54,13 +54,13 @@ class Ticket
    * @ORM\Column(name="type", type="boolean")
    * @Assert\Type("bool")
    */
-  protected $type;
+  protected $type = true;
 
   /**
    * @ORM\Column(name="reduced", type="boolean")
    * @Assert\Type("bool")
    */
-  protected $reduced;
+  protected $reduced = false;
 
   /**
    * @ORM\Column(name="price", type="integer")
@@ -418,6 +418,7 @@ class Ticket
 
         if ($hour >= 14 && $this->type && ($visitDate == $today)) {
             $context->buildViolation($message)->atPath('type')->addViolation();
+            return false;
         }
     }
 
