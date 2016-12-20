@@ -1,10 +1,10 @@
 <?php
 
-namespace LA\TicketingBundle\Tests\Controller;
+namespace LA\TicketingBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class TicketTest extends WebTestCase
 {
     public function testIndex()
     {
