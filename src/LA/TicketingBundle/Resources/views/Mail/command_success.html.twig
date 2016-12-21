@@ -1,8 +1,8 @@
 {# src/LA/TicketingBundle/Mail/command_success.html.twig #}
 
-  <h1>Louvre Billeterie</h1>
-
-  <h2>Récapitulatif de votre commande :</h2>
+  <h1><img src="http://ocrp3.steb-srv.fr/web/bundles/laapp/img/logo-louvre.jpg"/><br/>Louvre Billeterie</h1>
+  <h2>Musée du Louvre</h2>
+  <h3>Récapitulatif de votre commande :</h3>
 
   <div>
     <ul>
@@ -17,7 +17,9 @@
 
   {% for ticket in command.tickets %}
     <p>
-      {{ ticket.name }} {{ ticket.firstName }} : 
-      <a href="{{ absolute_url(path('la_ticketing_ticket_pdf', {'id': ticket.id})) }}">Billet n°{{ loop.index }}</a>
+      {{ ticket.name }} {{ ticket.firstName }} - {{ ticket.price / 100 }} €<br/>
+      Le {{ ticket.visitDate|date("d/m/Y") }} : 
+      <a href="{{ absolute_url(path('la_ticketing_ticket_pdf', {'id': ticket.id})) }}">Billet n°{{ loop.index }}</a><br/>
+      Code de validation : {{ ticket.validationCode }} 
     </p>
   {% endfor %}
