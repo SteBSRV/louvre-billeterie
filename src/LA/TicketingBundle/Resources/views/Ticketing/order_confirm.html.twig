@@ -1,3 +1,4 @@
+{# src/LA/TicketingBundle/Resources/views/Ticketing/order_confirm.html.twig #}
 {% extends "LAAppBundle::layout.html.twig" %}
 
 {% block title %}
@@ -19,18 +20,17 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Commande {{ command.id }} :</h3>
+      <h3 class="panel-title">Commande {{ order.id }} :</h3>
     </div>
     <ul class="list-group">
-        <li class="list-group-item">Réservé par : {{ command.name }} {{ command.firstName }}</li>
-        <li class="list-group-item">Nombre de billets : {{ command.nbTickets }}</li>
-        <li class="list-group-item">Prix total : {{ command.amount // 100 }}€</li>
+        <li class="list-group-item">Nombre de billets : {{ order.nbTickets }}</li>
+        <li class="list-group-item">Prix total : {{ order.totalAmount // 100 }}€</li>
     </ul>
   <div class="panel-heading">
       <h3 class="panel-title">Liste des billets</h3>
     </div>
     <ul class="list-group">
-        {% for ticket in command.tickets %}
+        {% for ticket in order.tickets %}
         <li class="list-group-item"><span class="ticket-number">{{ loop.index }}</span>{{ ticket.name }} {{ ticket.firstName }} : {{ ticket.price // 100 }}€ <span class="badge"><a href="{{ path('la_ticketing_ticket_pdf', {'id': ticket.id}) }}">PDF</a></li>
       {% endfor %}
     </ul>

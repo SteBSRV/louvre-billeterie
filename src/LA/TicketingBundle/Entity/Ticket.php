@@ -39,22 +39,16 @@ class Ticket
   protected $firstName;
 
   /**
-   * @ORM\Column(name="birth_date", type="date")
-   * @Assert\DateTime()
-   */
-  protected $birthDate;
-
-  /**
    * @ORM\Column(name="country", type="string")
    * @Assert\Type("string")
    */
   protected $country;
 
   /**
-   * @ORM\Column(name="type", type="boolean")
-   * @Assert\Type("bool")
+   * @ORM\Column(name="birth_date", type="date")
+   * @Assert\DateTime()
    */
-  protected $type = true;
+  protected $birthDate;
 
   /**
    * @ORM\Column(name="reduced", type="boolean")
@@ -63,398 +57,267 @@ class Ticket
   protected $reduced = false;
 
   /**
-   * @ORM\Column(name="price", type="integer")
-   * @Assert\Type("integer")
-   */
-  protected $price;
-
-  /**
-   * @ORM\ManyToOne(targetEntity="LA\TicketingBundle\Entity\Command", inversedBy="tickets", cascade={"persist"})
-   * @ORM\JoinColumn(name="Command_id", referencedColumnName="id")
-   * @Assert\Type("object")
-   */
-  protected $command;
-
-  /**
-   * @ORM\Column(name="visit_date", type="date")
-   * @Assert\DateTime()
-   * @Assert\GreaterThanOrEqual("today", message="Impossible de réserver pour un jour passé.")
-   */
-  protected $visitDate;
-
-  /**
    * @ORM\Column(name="validation_code", type="string", nullable=true)
    * @Assert\Type("string")
    */
   protected $validationCode;
 
   /**
-   * @ORM\Column(name="scan_terminated", type="boolean", nullable=true)
+   * @ORM\ManyToOne(targetEntity="LA\TicketingBundle\Entity\Order", inversedBy="tickets", cascade={"persist"})
+   * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+   * @Assert\Type("object")
+   */
+  protected $order;
+
+  /**
+   * @ORM\Column(name="used", type="boolean", nullable=true)
    * @Assert\Type("bool")
    */
-  protected $terminated = false;
+  protected $used = false;
 
-  // Initialisation de la date de visite à aujourd'hui
-  public function __construct()
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId()
   {
-    $this->visitDate = new \DateTime();
+    return $this->id;
   }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
+  /**
+   * Set name
+   *
+   * @param string $name
+   *
+   * @return Ticket
+   */
+  public function setName($name)
+  {
+    $this->name = $name;
+
+    return $this;
+  }
+
+  /**
+   * Get name
+   *
+   * @return string
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  /**
+   * Set firstName
+   *
+   * @param string $firstName
+   *
+   * @return Ticket
+   */
+  public function setFirstName($firstName)
+  {
+    $this->firstName = $firstName;
+
+    return $this;
+  }
+
+  /**
+   * Get firstName
+   *
+   * @return string
+   */
+  public function getFirstName()
+  {
+    return $this->firstName;
+  }
+
+  /**
+   * Set country
+   *
+   * @param string $country
+   *
+   * @return Ticket
+   */
+  public function setCountry($country)
+  {
+    $this->country = $country;
+
+    return $this;
+  }
+
+  /**
+   * Get country
+   *
+   * @return string
+   */
+  public function getCountry()
+  {
+    return $this->country;
+  }
+
+  /**
+   * Set birthDate
+   *
+   * @param \DateTime $birthDate
+   *
+   * @return Ticket
+   */
+  public function setBirthDate(\DateTime $birthDate)
+  {
+    $this->birthDate = $birthDate;
+
+    return $this;
+  }
+
+  /**
+   * Get birthDate
+   *
+   * @return \DateTime
+   */
+  public function getBirthDate()
+  {
+    return $this->birthDate;
+  }
+
+  /**
+   * Set reduced
+   *
+   * @param boolean $reduced
+   *
+   * @return Ticket
+   */
+  public function setReduced($reduced)
+  {
+    $this->reduced = $reduced;
+
+    return $this;
+  }
+
+  /**
+   * Get reduced
+   *
+   * @return boolean
+   */
+  public function getReduced()
+  {
+    return $this->reduced;
+  }
+
+  /**
+   * Set validationCode
+   *
+   * @param string $validationCode
+   *
+   * @return Ticket
+   */
+  public function setValidationCode($validationCode)
+  {
+    $this->validationCode = $validationCode;
+
+    return $this;
+  }
+
+  /**
+   * Get validationCode
+   *
+   * @return string
+   */
+  public function getValidationCode()
+  {
+    return $this->validationCode;
+  }
+
+  /**
+   * Generate validationCode
+   *
+   * @return Ticket
+   */
+  public function generateValidationCode()
+  {
+    $code = substr(md5(random_int(100000, 999999)), 0, 10);
+    $this->validationCode = $code;
+
+    return $this;
+  }
+
+  /**
+   * Set used
+   *
+   * @param boolean $used
+   *
+   * @return Ticket
+   */
+  public function setUsed($used)
+  {
+    $this->used = $used;
+
+    return $this;
+  }
+
+  /**
+   * Get used
+   *
+   * @return boolean
+   */
+  public function getUsed()
+  {
+    return $this->used;
+  }
+
+  /**
+   * Set order
+   *
+   * @param \LA\TicketingBundle\Entity\Order $order
+   *
+   * @return Ticket
+   */
+  public function setOrder(\LA\TicketingBundle\Entity\Order $order = null)
+  {
+    $this->order = $order;
+
+    return $this;
+  }
+
+  /**
+   * Get order
+   *
+   * @return \LA\TicketingBundle\Entity\Order
+   */
+  public function getOrder()
+  {
+    return $this->order;
+  }
+
+  // Custom functions :
+
+  /**
+   * Get price
+   *
+   * @return integer
+   */
+  public function getPrice()
+  {
+    if ($this->reduced) {
+      $price = self::PRICE_REDUCED;
+
+      return $price;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Ticket
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+    $now = new \DateTime('now');
+    $age = $now->diff($this->birthDate)->y;
 
-        return $this;
+    if ($age < 4) {
+      $price = self::PRICE_FREE;
+    } elseif ($age < 12) {
+      $price = self::PRICE_KID;
+    } elseif ($age > 60) {
+      $price = self::PRICE_SENIOR;
+    } else {
+      $price = self::PRICE_NORMAL;
     }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     *
-     * @return Ticket
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Set birthDate
-     *
-     * @param \DateTime $birthDate
-     *
-     * @return Ticket
-     */
-    public function setBirthDate($birthDate)
-    {
-        $this->birthDate = $birthDate;
-
-        return $this;
-    }
-
-    /**
-     * Get birthDate
-     *
-     * @return \DateTime
-     */
-    public function getBirthDate()
-    {
-        return $this->birthDate;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country
-     *
-     * @return Ticket
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set type
-     *
-     * @param boolean $type
-     *
-     * @return Ticket
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return boolean
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set visitDate
-     *
-     * @param \DateTime $visitDate
-     *
-     * @return Ticket
-     */
-    public function setVisitDate($visitDate)
-    {
-        $this->visitDate = $visitDate;
-
-        return $this;
-    }
-
-    /**
-     * Get visitDate
-     *
-     * @return \DateTime
-     */
-    public function getVisitDate()
-    {
-        return $this->visitDate;
-    }
-
-    /**
-     * Set validationCode
-     *
-     * @param string $validationCode
-     *
-     * @return Ticket
-     */
-    public function setValidationCode()
-    {
-        $validationCode = random_int(100000, 999999);
-        $validationCode = substr(md5($validationCode), 0, 10);
-        $this->validationCode = $validationCode;
-
-        return $this;
-    }
-
-    /**
-     * Get validationCode
-     *
-     * @return string
-     */
-    public function getValidationCode()
-    {
-        return $this->validationCode;
-    }
-
-    /**
-     * Set price
-     *
-     * @param \LA\TicketingBundle\Entity\Price $price
-     *
-     * @return Ticket
-     */
-    public function setPrice()
-    {
-        if ($this->reduced) {
-            $this->price = $this::PRICE_REDUCED;
-            
-            if (!$this->type) {
-            $this->price = $this->price / 2;
-            }
-
-            return $this;
-        }
-
-        $now = new \DateTime('now');
-        $age = $now->diff($this->birthDate)->y;
-
-        if ($age < 4) {
-            $this->price = $this::PRICE_FREE;
-        } elseif ($age < 12) {
-            $this->price = $this::PRICE_KID;
-        } elseif ($age > 60) {
-            $this->price = $this::PRICE_SENIOR;
-        } else {
-            $this->price = $this::PRICE_NORMAL;
-        }
-
-        if (!$this->type) {
-            $this->price = $this->price / 2;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return \LA\TicketingBundle\Entity\Price
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Set command
-     *
-     * @param \LA\TicketingBundle\Entity\Command $command
-     *
-     * @return Ticket
-     */
-    public function setCommand(\LA\TicketingBundle\Entity\Command $command)
-    {
-        $this->command = $command;
-
-        return $this;
-    }
-
-    /**
-     * Get command
-     *
-     * @return \LA\TicketingBundle\Entity\Command
-     */
-    public function getCommand()
-    {
-        return $this->command;
-    }
-
-    /**
-     * Set reduced
-     *
-     * @param boolean $reduced
-     *
-     * @return Ticket
-     */
-    public function setReduced($reduced)
-    {
-        $this->reduced = $reduced;
-
-        return $this;
-    }
-
-    /**
-     * Get reduced
-     *
-     * @return boolean
-     */
-    public function getReduced()
-    {
-        return $this->reduced;
-    }
-
-    /**
-     * Set terminated
-     *
-     * @param boolean $terminated
-     *
-     * @return Ticket
-     */
-    public function setTerminated($terminated)
-    {
-        $this->terminated = $terminated;
-
-        return $this;
-    }
-
-    /**
-     * Get terminated
-     *
-     * @return boolean
-     */
-        public function getTerminated()
-    {
-        return $this->terminated;
-    }
-
-    /**
-     *
-     * @param ExecutionContextInterface $context
-     *
-     * @Assert\Callback
-     */
-    public function isTypeValid(ExecutionContext $context)
-    {
-        $message = "Vous ne pouvez plus réserver de billet Journée pour le jour même une fois 14h passé, vous pouvez cependant toujours réserver un billet Demi-journée";
-
-        $now = new \DateTime('now');
-        $today = $now->format('Y-m-d');
-        $hour = $now->format('H');
-        $visitDate = $this->visitDate->format('Y-m-d');
-
-        if ($hour >= 14 && $this->type && ($visitDate == $today)) {
-            $context->buildViolation($message)->atPath('type')->addViolation();
-            return false;
-        }
-    }
-
-    /**
-     *
-     * @param ExecutionContextInterface $context
-     *
-     * @Assert\Callback
-     */
-    public function isVisitDateValid(ExecutionContext $context)
-    {
-        $messageClosed = "Impossible de réserver ce jour, le musée étant fermé.";
-        $messageForbidden = "Impossible de réserver ce jour, les résevations en ligne étant fermées pour les jours fériés et les dimanches";
-
-        $visitDate = $this->visitDate->format('d-m');
-        $closedDays = array('01-05','01-11','25-12');
-
-        $year = $this->visitDate->format('Y');
-        $easterDate = new \DateTime();
-        $easterDate = $easterDate->setTimestamp(easter_date($year));
-        $easterMonday = $easterDate->modify('+1 day');
-        $easterMonday = $easterMonday->format('d-m');
-        $ascension = $easterDate->modify('+38 day');
-        $ascension = $ascension->format('d-m');
-        $pentecote = $easterDate->modify('+11 day');
-        $pentecote = $pentecote->format('d-m');
-
-        $forbiddenDays = array('01-01',$easterMonday,'08-05',$ascension,$pentecote,'14-07','15-08','11-11');
-
-        $visitDay = $this->visitDate->format('N');
-
-        if ($visitDay == 2 || in_array($visitDate, $closedDays)) {
-            $context->buildViolation($messageClosed)->atPath('visitDate')->addViolation();
-        } elseif ($visitDay == 7 || in_array($visitDate, $forbiddenDays)) {
-            $context->buildViolation($messageForbidden)->atPath('visitDate')->addViolation();
-        }
-
-    }
+    return $price;
+  }
 }

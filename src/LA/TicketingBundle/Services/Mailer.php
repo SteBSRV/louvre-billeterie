@@ -4,7 +4,7 @@
 namespace LA\TicketingBundle\Services;
 
 use Symfony\Component\Templating\EngineInterface;
-use LA\TicketingBundle\Entity\Command;
+use LA\TicketingBundle\Entity\Order;
 
 class Mailer
 {
@@ -14,7 +14,7 @@ class Mailer
 	private $reply = 'contact@steb-srv.fr';
 	private $name = 'Louvre Billeterie';
 
-	public function __construct($mailer, EngineInterface $templating)
+	public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
 	{
 		$this->mailer = $mailer;
 		$this->templating = $templating;
@@ -36,12 +36,12 @@ class Mailer
 		$this->mailer->send($mail);
 	}
 
-	public function sendCommandSuccess(Command $command)
+	public function sendOrderSuccess(Order $order)
 	{
 		$subject = "[Louvre-Billeterie] Votre commande a été validée";
-		$template = 'LATicketingBundle:Mail:command_success.html.twig';
-		$to = $command->getMail();
-		$body = $this->templating->render($template, array('command' => $command));
+		$template = 'LATicketingBundle:Mail:order_success.html.twig';
+		$to = $order->getMail();
+		$body = $this->templating->render($template, array('order' => $order));
 		$this->sendMessage($to, $subject, $body);
 	}
 }

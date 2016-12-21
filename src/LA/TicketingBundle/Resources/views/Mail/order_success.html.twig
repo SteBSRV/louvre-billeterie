@@ -1,4 +1,4 @@
-{# src/LA/TicketingBundle/Mail/command_success.html.twig #}
+{# src/LA/TicketingBundle/Resources/views/Mail/order_success.html.twig #}
 
   <h1><img src="http://ocrp3.steb-srv.fr/web/bundles/laapp/img/logo-louvre.jpg"/><br/>Louvre Billeterie</h1>
   <h2>Musée du Louvre</h2>
@@ -6,19 +6,18 @@
 
   <div>
     <ul>
-    	<li>Nom : {{ command.name }} {{ command.firstName }}</li>
-    	<li>Nombre de ticket : {{ command.nbTickets }}</li>
-    	<li>Prix total de la commande : {{ command.amount // 100 }}€</li>
+    	<li>Nombre de ticket : {{ order.nbTickets }}</li>
+    	<li>Prix total de la commande : {{ order.totalAmount // 100 }}€</li>
   </div>
 
   <p>
     Vous trouverez ci-dessous les liens pour télécharger vos billets :
   </p>
 
-  {% for ticket in command.tickets %}
+  {% for ticket in order.tickets %}
     <p>
       {{ ticket.name }} {{ ticket.firstName }} - {{ ticket.price / 100 }} €<br/>
-      Le {{ ticket.visitDate|date("d/m/Y") }} : 
+      Le {{ order.visitDate|date("d/m/Y") }} : 
       <a href="{{ absolute_url(path('la_ticketing_ticket_pdf', {'id': ticket.id})) }}">Billet n°{{ loop.index }}</a><br/>
       Code de validation : {{ ticket.validationCode }} 
     </p>

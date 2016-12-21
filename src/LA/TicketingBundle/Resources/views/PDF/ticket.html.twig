@@ -17,15 +17,15 @@
 		<span class="underline">Visiteur :</span><br/><br/>
 		<span><big>{{ ticket.name }} {{ ticket.firstName }}</big></span><br/><br/>
 		<span class="underline">Type de billet :</span><br/><br/>
-		<span><big>{% if ticket.type %}Journée{% else %}Demi-journée{% endif %}</big></span><br/><br/>
+		<span><big>{{ order.ticketsType }}</big></span><br/><br/>
 		<span class="underline">Date de la visite :</span><br/><br/>
-		<span><big>{{ ticket.visitDate|date("d/m/Y") }}</big></span><br/><br/>
+		<span><big>{{ order.visitDate|date("d/m/Y") }}</big></span><br/><br/>
 		<span class="underline">Tarif :</span><br/><br/>
 		<span><big>{{ ticket.price / 100 }}€</big></span><br/><br/>
 		<span class="underline">Tarif réduit :</span><br/><br/>
 		<span><big>{% if ticket.reduced %}<strong style="color:red;">Justificatif nécessaire</strong>{% else %}Non appliquable{% endif %}</big></span><br/><br/>
 		<span class="underline">Commande :</span><br/><br/>
-		<span><big>n°{{ ticket.command.id }}</big></span>
+		<span><big>n°{{ order.id }}</big></span>
 	</div>
 	<page_footer>
 		<hr/>

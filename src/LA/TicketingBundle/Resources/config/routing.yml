@@ -2,17 +2,17 @@ la_ticketing_info:
     path:     /info
     defaults: { _controller: LATicketingBundle:Ticketing:info }
 
-la_ticketing_command:
-    path:     /command/create
-    defaults: { _controller: LATicketingBundle:Ticketing:commandCreate }
+la_ticketing_order:
+    path:     /order/create
+    defaults: { _controller: LATicketingBundle:Ticketing:orderCreate }
 
 la_ticketing_buy:
-    path:     /command/{id}/buy
-    defaults: { _controller: LATicketingBundle:Ticketing:commandBuy }
+    path:     /order/{id}/buy
+    defaults: { _controller: LATicketingBundle:Ticketing:orderBuy }
 
 la_ticketing_confirm:
-    path:     /command/{id}/confirm
-    defaults: { _controller: LATicketingBundle:Ticketing:commandConfirm }
+    path:     /order/{id}/confirm
+    defaults: { _controller: LATicketingBundle:Ticketing:orderConfirm }
 
 la_ticketing_ticket_pdf:
     path:     /ticket/{id}

@@ -1,0 +1,62 @@
+<?php
+// src/LA/TicketingBundle/Entity/Command.php
+
+namespace LA\TicketingBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Table(name="la_command")
+ * @ORM\Entity(repositoryClass="LA\TicketingBundle\Repository\CommandRepository")
+ */
+class Command
+{
+  /**
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
+  protected $id;
+
+  /**
+   * @ORM\Column(name="mail", type="string", length=255)
+   */
+  protected $mail;
+
+  /**
+   * @ORM\Column(name="visit_date", type="datetime")
+   * @Assert\DateTime()
+   */
+  protected $visitDate;
+
+  /**
+   * @ORM\Column(name="tickets_type", type="string", columnDefinition="enum('journée', 'demi-journée')")
+   * @Assert\Type("string")
+   */
+  protected $ticketsType;
+
+  /**
+   * @var ArrayCollection
+   * @ORM\OneToMany(targetEntity="LA\TicketingBundle\Entity\Ticket", mappedBy="command", cascade={"persist"})
+   * @Assert\NotBlank()
+   * @Assert\Valid()
+   */
+  protected $tickets;
+
+  /**
+   * @ORM\Column(name="paid", type="boolean")
+   * @Assert\Type("bool")
+   */
+  protected $paid = false;
+
+  /**
+   * Constructor
+   */
+  public function __construct()
+  {
+      $this->tickets = new ArrayCollection();
+      $this->date = new \DateTime();
+  }
+}
