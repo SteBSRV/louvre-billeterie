@@ -46,7 +46,6 @@ class Order
   /**
    * @var ArrayCollection
    * @ORM\OneToMany(targetEntity="LA\TicketingBundle\Entity\Ticket", mappedBy="order", cascade={"persist"})
-   * @Assert\NotBlank()
    * @Assert\Valid()
    */
   protected $tickets;
@@ -80,14 +79,10 @@ class Order
    * Set mail
    *
    * @param string $mail
-   *
-   * @return Order
    */
   public function setMail($mail)
   {
-    $this->mail = $mail;
-
-    return $this;
+    $this->mail = $mail;;
   }
 
   /**
@@ -104,14 +99,10 @@ class Order
    * Set visitDate
    *
    * @param \DateTime $visitDate
-   *
-   * @return Order
    */
   public function setVisitDate($visitDate)
   {
     $this->visitDate = $visitDate;
-
-    return $this;
   }
 
   /**
@@ -128,14 +119,10 @@ class Order
    * Set ticketsType
    *
    * @param string $ticketsType
-   *
-   * @return Order
    */
   public function setTicketsType($ticketsType)
   {
     $this->ticketsType = $ticketsType;
-
-    return $this;
   }
 
   /**
@@ -152,8 +139,6 @@ class Order
    * Set paid
    *
    * @param boolean $paid
-   *
-   * @return Order
    */
   public function setPaid()
   {
@@ -162,8 +147,6 @@ class Order
     foreach ($this->tickets as $ticket) {
       $ticket->generateValidationCode();
     }
-
-    return $this;
   }
 
   /**
@@ -180,14 +163,10 @@ class Order
    * Add ticket
    *
    * @param \LA\TicketingBundle\Entity\Ticket $ticket
-   *
-   * @return ORder
    */
   public function addTicket(\LA\TicketingBundle\Entity\Ticket $ticket)
   {
     $this->tickets[] = $ticket;
-
-    return $this;
   }
 
   /**
@@ -240,15 +219,11 @@ class Order
 
   /**
    * Set TicketsOrder
-   *
-   * @return Order
    */
   public function setTicketsOrder()
   {
     foreach ($this->tickets as $ticket) {
       $ticket->setOrder($this);
     }
-
-    return $this;
   }
 }

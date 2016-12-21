@@ -89,14 +89,10 @@ class Ticket
    * Set name
    *
    * @param string $name
-   *
-   * @return Ticket
    */
   public function setName($name)
   {
     $this->name = $name;
-
-    return $this;
   }
 
   /**
@@ -113,14 +109,10 @@ class Ticket
    * Set firstName
    *
    * @param string $firstName
-   *
-   * @return Ticket
    */
   public function setFirstName($firstName)
   {
     $this->firstName = $firstName;
-
-    return $this;
   }
 
   /**
@@ -137,14 +129,10 @@ class Ticket
    * Set country
    *
    * @param string $country
-   *
-   * @return Ticket
    */
   public function setCountry($country)
   {
     $this->country = $country;
-
-    return $this;
   }
 
   /**
@@ -161,14 +149,10 @@ class Ticket
    * Set birthDate
    *
    * @param \DateTime $birthDate
-   *
-   * @return Ticket
    */
   public function setBirthDate(\DateTime $birthDate)
   {
     $this->birthDate = $birthDate;
-
-    return $this;
   }
 
   /**
@@ -185,14 +169,10 @@ class Ticket
    * Set reduced
    *
    * @param boolean $reduced
-   *
-   * @return Ticket
    */
   public function setReduced($reduced)
   {
     $this->reduced = $reduced;
-
-    return $this;
   }
 
   /**
@@ -209,14 +189,10 @@ class Ticket
    * Set validationCode
    *
    * @param string $validationCode
-   *
-   * @return Ticket
    */
   public function setValidationCode($validationCode)
   {
     $this->validationCode = $validationCode;
-
-    return $this;
   }
 
   /**
@@ -231,29 +207,21 @@ class Ticket
 
   /**
    * Generate validationCode
-   *
-   * @return Ticket
    */
   public function generateValidationCode()
   {
     $code = substr(md5(random_int(100000, 999999)), 0, 10);
     $this->validationCode = $code;
-
-    return $this;
   }
 
   /**
    * Set used
    *
    * @param boolean $used
-   *
-   * @return Ticket
    */
   public function setUsed($used)
   {
     $this->used = $used;
-
-    return $this;
   }
 
   /**
@@ -270,14 +238,10 @@ class Ticket
    * Set order
    *
    * @param \LA\TicketingBundle\Entity\Order $order
-   *
-   * @return Ticket
    */
   public function setOrder(\LA\TicketingBundle\Entity\Order $order = null)
   {
     $this->order = $order;
-
-    return $this;
   }
 
   /**
