@@ -6,10 +6,12 @@ namespace LA\TicketingBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use LA\TicketingBundle\Validator\Constraints as LAAssert;
 
 /**
  * @ORM\Table(name="la_order")
  * @ORM\Entity(repositoryClass="LA\TicketingBundle\Repository\OrderRepository")
+ * @LAAssert\OrderCheck
  */
 class Order
 {
@@ -28,12 +30,14 @@ class Order
 
   /**
    * @ORM\Column(name="mail", type="string", length=255, nullable=true)
+   * @Assert\Email()
    */
   protected $mail;
 
   /**
    * @ORM\Column(name="visit_date", type="datetime")
    * @Assert\DateTime()
+   * @Assert\GreaterThanOrEqual("today", message="Vous ne pouvez commander pour un jour passé.")
    */
   protected $visitDate;
 
@@ -61,8 +65,8 @@ class Order
    */
   public function __construct()
   {
-      $this->tickets = new ArrayCollection();
-      $this->orderDate = new \DateTime('now');
+    $this->tickets = new ArrayCollection();
+    $this->orderDate = new \DateTime('now');
   }
 
   /**

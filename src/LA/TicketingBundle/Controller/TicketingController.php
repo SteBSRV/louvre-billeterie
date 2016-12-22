@@ -37,22 +37,18 @@ class TicketingController extends Controller
             $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
             return $this->render('LATicketingBundle:Ticketing:order_full.html.twig');
         }
-        // Création d'une instance order
+
         $order = new Order();
-        // Création du formulaire destiné à hydrater l'instance $order
         $form = $this->get('form.factory')->create(OrderType::class, $order);
-        // Test sur l'état du formulaire
+
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $order->setTicketsOrder();
-            // Persist de la commande hydratée par le formulaire
             $em->persist($order);
-            // Sauvegarde en base
             $em->flush();
-            // Message de confirmation de commande
+
             $request->getSession()->getFlashBag()->add('info','Commande valide.');
 
             $id = $order->getId();
-            // Paiement de la commande :
             return $this->redirectToRoute('la_ticketing_buy', compact('id','order'));
         }
 
@@ -67,44 +63,37 @@ class TicketingController extends Controller
             $mail = $request->get('stripeEmail');
             $order->setMail($mail);
 
-            // Configuration de la clé privé
             \Stripe\Stripe::setApiKey("sk_test_cTxtx7HJFSy2rLXArzb0oVt5");
 
-            // Récupération du Token de paiement
             $token = $request->get('stripeToken');
 
-            // Tentative de transaction
             try {
                 $charge = \Stripe\Charge::create(array(
                     'amount'      => $order->getTotalAmount(),
                     'currency'    => 'eur',
                     'source'      => $token,
-                    'description' => 'Paiement des billets'
-                    ));
+                    'description' => 'Paiement des billets',
+                    )
+                );
             } catch(\Stripe\Error\Card $e) {
-                // Retourne l'erreur dans un message Flash
                 $request->getSession()->getFlashBag()->add('error','La carte saisie n\'est pas valide');
 
                 $id = $order->getId();
-                // Redirection pour une nouvelle tentative
                 return $this->redirectToRoute('la_ticketing_buy', compact('id'));
             }
 
             // Validation :
             $order->setPaid(true);
 
-            // Persistate en base :
             $em = $this->getDoctrine()->getManager();
             $em->persist($order);
             $em->flush();
 
-            // Confirmation
             $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
             // Mail :
             $this->get('la_ticketing.mailer')->sendOrderSuccess($order);
 
             $id = $order->getId();
-            // Confirmation
             return $this->redirectToRoute('la_ticketing_confirm', compact('id'));
         }
 
@@ -148,5 +137,4 @@ class TicketingController extends Controller
         return $this->render('LATicketingBundle:Ticketing:stats.html.twig', compact('nbTicketsToday')
         );
     }
-
 }

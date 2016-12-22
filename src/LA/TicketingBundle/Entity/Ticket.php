@@ -28,13 +28,13 @@ class Ticket
 
   /**
    * @ORM\Column(name="name", type="string", length=255)
-   * @Assert\NotBlank()
+   * @Assert\NotBlank(message="Veuillez entrer un nom.")
    */
   protected $name;
 
   /**
    * @ORM\Column(name="first_name", type="string", length=255)
-   * @Assert\NotBlank()
+   * @Assert\NotBlank(message="Veuillez entrer un prénom.")
    */
   protected $firstName;
 

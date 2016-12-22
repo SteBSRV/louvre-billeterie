@@ -4,3 +4,9 @@ services:
         arguments:
             - "@mailer"
             - "@templating"
+    la_ticketing.validator.ordercheck:                           
+        class: LA\TicketingBundle\Validator\Constraints\OrderCheckValidator  
+        arguments:
+            - "@doctrine.orm.entity_manager"                                     
+        tags:
+            - { name: validator.constraint_validator, alias: la.order_check }

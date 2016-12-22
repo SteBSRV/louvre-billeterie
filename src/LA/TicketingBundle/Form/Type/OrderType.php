@@ -35,10 +35,11 @@ class OrderType extends AbstractType
                 'label'    => 'Type de billets'
                 )
             )
-            ->add('nbTickets',       ChoiceType::class, array(
-                'choices'  => array(1,2,3,4,5,6,7,8,9,10,11),
-                'label'    => 'Nomre de ticket(s)',
-                'mapped'   => false,
+            ->add('nbTickets',         ChoiceType::class, array(
+                'placeholder' => 'Choisir une quantité',
+                'choices'     => array_combine(range(1,10),range(1,10)),
+                'label'       => 'Nomre de ticket(s)',
+                'mapped'      => false,
                 )
             )
             ->add('tickets',           CollectionType::class, array(

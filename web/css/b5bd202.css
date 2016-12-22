@@ -38,3 +38,12 @@
 .stripe-button{
   margin-bottom: 50px;
 }
+
+#la_ticketingbundle_order_tickets{
+  margin-left: 10%;
+  list-style: none;
+}
+
+#la_ticketingbundle_order_tickets hr{
+  border-color: #121212;
+}
