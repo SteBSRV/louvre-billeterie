@@ -17,7 +17,7 @@ class OrderCheckValidator extends ConstraintValidator
         $this->em = $em;
     }
 
-	public function validate($order, Constraint $constraint)
+	public function validate(Order $order, Constraint $constraint)
 	{
         // Validation de la date de visite
 		$visitDate = $order->getVisitDate()->format('d-m');

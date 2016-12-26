@@ -1,5 +1,6 @@
 {
     "name": "steve/louvre-billeterie",
+    "description": "Billetterie du musée du Louvre",
     "license": "proprietary",
     "type": "project",
     "autoload": {

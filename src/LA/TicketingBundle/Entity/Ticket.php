@@ -5,7 +5,6 @@ namespace LA\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Context\ExecutionContext;
 
 /**
  * @ORM\Table(name="la_ticket")
