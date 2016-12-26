@@ -31,9 +31,8 @@ class TicketingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $ticketRepo = $em->getRepository('LATicketingBundle:Ticket');
-        $nbTicketsToday = $ticketRepo->getNbTicketsPerDay();
 
-        if ($nbTicketsToday >= 1000) {
+        if ($ticketRepo->getNbTicketsPerDay() >= 1000) {
             $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
             return $this->render('LATicketingBundle:Ticketing:order_full.html.twig');
         }
@@ -47,62 +46,38 @@ class TicketingController extends Controller
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('info','Commande valide.');
-
             $id = $order->getId();
             return $this->redirectToRoute('la_ticketing_buy', compact('id','order'));
         }
 
-        // Création du formulaire de commande
         return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', array('form' => $form->createView()));
     }
 
     public function orderBuyAction(Order $order, Request $request)
     {
         if ($request->isMethod('POST')) {
-            // Récupération de l'adresse email pour l'envoi des billets
-            $mail = $request->get('stripeEmail');
-            $order->setMail($mail);
 
-            \Stripe\Stripe::setApiKey("sk_test_cTxtx7HJFSy2rLXArzb0oVt5");
+            $payment = $this->get('la_ticketing.stripe_payment');
 
-            $token = $request->get('stripeToken');
-
-            try {
-                $charge = \Stripe\Charge::create(array(
-                    'amount'      => $order->getTotalAmount(),
-                    'currency'    => 'eur',
-                    'source'      => $token,
-                    'description' => 'Paiement des billets',
-                    )
-                );
-            } catch(\Stripe\Error\Card $e) {
+            if ($payment->sendPayment($order, $request)) {
                 $request->getSession()->getFlashBag()->add('error','La carte saisie n\'est pas valide');
 
                 $id = $order->getId();
                 return $this->redirectToRoute('la_ticketing_buy', compact('id'));
+            } else {
+                $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
+
+                $id = $order->getId();
+                return $this->redirectToRoute('la_ticketing_confirm', compact('id'));
             }
-
-            // Validation :
-            $order->setPaid(true);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($order);
-            $em->flush();
-
-            $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
-            // Mail :
-            $this->get('la_ticketing.mailer')->sendOrderSuccess($order);
-
-            $id = $order->getId();
-            return $this->redirectToRoute('la_ticketing_confirm', compact('id'));
         }
-
         // Création du formumlaire de paiement + Récap commande
         return $this->render('LATicketingBundle:Ticketing:order_buy.html.twig', compact('order'));
     }
 
     public function orderConfirmAction(Request $request, Order $order)
     {
+        $this->get('la_ticketing.mailer')->sendOrderSuccess($order);
         // Confirmation de la commande (redirection suite au succès du paiement)
         return $this->render('LATicketingBundle:Ticketing:order_confirm.html.twig', compact('order'));
     }

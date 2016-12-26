@@ -10,3 +10,8 @@ services:
             - "@doctrine.orm.entity_manager"                                     
         tags:
             - { name: validator.constraint_validator, alias: la.order_check }
+    la_ticketing.stripe_payment:
+        class: LA\TicketingBundle\Services\StripePayment
+        arguments:
+            - "%stripe_key%"
+            - "@doctrine.orm.entity_manager"

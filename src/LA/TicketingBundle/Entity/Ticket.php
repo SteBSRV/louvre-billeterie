@@ -263,9 +263,18 @@ class Ticket
    */
   public function getPrice()
   {
+    if ($this->order->getTicketsType() == 'demi-journée') {
+      $halfDay = true;
+    } else {
+      $halfDay = false;
+    }
+
     if ($this->reduced) {
       $price = self::PRICE_REDUCED;
 
+      if ($halfDay) {
+        return $price / 2;
+      }
       return $price;
     }
 
@@ -282,6 +291,9 @@ class Ticket
       $price = self::PRICE_NORMAL;
     }
 
+    if ($halfDay) {
+      return $price / 2;
+    }
     return $price;
   }
 }
