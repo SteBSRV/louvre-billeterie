@@ -2,12 +2,12 @@
 {% extends "LAAppBundle::layout.html.twig" %}
 
 {% block title %}
-  Billeterie - {{ parent() }}
+  Billetterie - {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h2>Achat</h2>
+  <h2>Paiement</h2>
   
   {% for type, messages in app.session.flashbag.all %}
     {% for message in messages %}
@@ -42,7 +42,7 @@
 	src="https://checkout.stripe.com/checkout.js" class="stripe-button"
 	data-key="pk_test_FKJS6IJ97uJrMv948ebz5Mx4"
 	data-amount="{{ order.totalAmount }}"
-	data-name="Louvre Billeterie"
+	data-name="Louvre Billetterie"
 	data-description="Commande en ligne"
 	data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
 	data-locale="auto"

@@ -2,12 +2,12 @@
 {% extends "LAAppBundle::layout.html.twig" %}
 
 {% block title %}
-  Billeterie - {{ parent() }}
+  Billetterie - {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
-  <h2>Billeterie</h2>
+  <h2>Billetterie</h2>
 
   {% for type, messages in app.session.flashbag.all %}
     {% for message in messages %}
@@ -21,7 +21,7 @@
   <h3>Commande</h3>
 
   <div class="well">
-    <p>Commande fermée</p>
+    <p>Les Commandes sont actuellement fermée.</p>
   </div>
 
 {% endblock %}

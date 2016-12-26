@@ -12,7 +12,7 @@ class Mailer
 	protected $templating;
 	private $from = 'no-reply@steb-srv.fr';
 	private $reply = 'contact@steb-srv.fr';
-	private $name = 'Louvre Billeterie';
+	private $name = 'Louvre Billetterie';
 
 	public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
 	{
@@ -38,7 +38,7 @@ class Mailer
 
 	public function sendOrderSuccess(Order $order)
 	{
-		$subject = "[Louvre-Billeterie] Votre commande a été validée";
+		$subject = "[Louvre-Billetterie] Votre commande a été validée";
 		$template = 'LATicketingBundle:Mail:order_success.html.twig';
 		$to = $order->getMail();
 		$body = $this->templating->render($template, array('order' => $order));
