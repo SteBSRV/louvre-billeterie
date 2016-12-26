@@ -32,13 +32,13 @@ class TicketingController extends Controller
         $em = $this->getDoctrine()->getManager();
         $ticketRepo = $em->getRepository('LATicketingBundle:Ticket');
 
-        if ($ticketRepo->getNbTicketsPerDay() >= 1000) {
-            $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
-            return $this->render('LATicketingBundle:Ticketing:order_full.html.twig');
-        }
-
         $order = new Order();
         $form = $this->get('form.factory')->create(OrderType::class, $order);
+
+        if ($ticketRepo->getNbTicketsPerDay() >= 1000) {
+            $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour une entrée aujourd\'hui ont été vendus.');
+            return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', array('form' => $form->createView()));
+        }
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $order->setTicketsOrder();

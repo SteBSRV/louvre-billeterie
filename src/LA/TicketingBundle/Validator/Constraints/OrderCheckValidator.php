@@ -5,7 +5,6 @@ namespace LA\TicketingBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use LA\TicketingBundle\Entity\Order;
 use Doctrine\ORM\EntityManager;
 
 class OrderCheckValidator extends ConstraintValidator
@@ -17,7 +16,7 @@ class OrderCheckValidator extends ConstraintValidator
         $this->em = $em;
     }
 
-	public function validate(Order $order, Constraint $constraint)
+	public function validate($order, Constraint $constraint)
 	{
         // Validation de la date de visite
 		$visitDate = $order->getVisitDate()->format('d-m');

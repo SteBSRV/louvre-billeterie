@@ -25,7 +25,7 @@ class StripePayment
         $this->token = $request->get('stripeToken');
 
         try {
-            $charge = \Stripe\Charge::create(array(
+            \Stripe\Charge::create(array(
                 'amount'      => $order->getTotalAmount(),
                 'currency'    => 'eur',
                 'source'      => $this->token,
