@@ -1,4 +1,5 @@
 <?php
+// Tests\LATicketingBundle\Controller\TicketingControllerTest.php
 
 namespace Tests\LATicketingBundle\Controller;
 
