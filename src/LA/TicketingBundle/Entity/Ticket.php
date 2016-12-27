@@ -238,7 +238,7 @@ class Ticket
    *
    * @param \LA\TicketingBundle\Entity\Order $order
    */
-  public function setOrder(\LA\TicketingBundle\Entity\Order $order = null)
+  public function setOrder(\LA\TicketingBundle\Entity\Order $order)
   {
     $this->order = $order;
   }

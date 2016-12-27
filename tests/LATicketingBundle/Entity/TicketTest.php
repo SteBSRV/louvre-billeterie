@@ -1,61 +1,41 @@
 <?php
+// test/LATicketingBundle/Entity/TicketTest.php
 
 namespace Tests\LATicketingBundle\Entity;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use LA\TicketingBundle\Entity\Ticket;
-use LA\TicketingBundle\Entity\Command;
+use LA\TicketingBundle\Entity\Order;
 
-class TicketTest extends WebTestCase
+class TicketTest extends \PHPUnit_Framework_TestCase
 {
     public function testPrices()
     {
-    	$this->assertEquals('0', Ticket::PRICE_FREE, "Problème sur la configuration du tarif gratuit.");
+    	$this->assertEquals(0, Ticket::PRICE_FREE, "Problème sur la configuration du tarif gratuit.");
         $this->assertNotNull(Ticket::PRICE_NORMAL, "Problème sur la configuration des tarifs.");
-    }
-
-    public function testVisitDate()
-    {
-    	$ticket = new Ticket();
-
-    	$this->assertNotNull($ticket->getVisitDate(), "Problème sur l'initialisation du type DateTime pour la date de visite");
     }
 
     public function testValidationCode()
     {
     	$ticket = new Ticket();
-    	$validationCode = $ticket->setValidationCode();
+    	$ticket->generateValidationCode();
 
-    	$this->assertNotNull($validationCode, "Problème sur la création du code de validation.");
+    	$this->assertNotNull($ticket->getValidationCode(), "Problème sur la création du code de validation.");
     }
 
-    public function testSetPrice()
+    public function testOrder()
     {
     	$ticket = new Ticket();
-    	$ticket->setVisitDate(new \DateTime('tomorrow'));
+    	$order = new Order();
 
-    	// BirthDate Today -> Category younger than 4 years -> 0€
-    	$birthDate = new \DateTime('now');
-    	$ticket->setBirthDate($birthDate);
-    	$ticket->setPrice();
+    	$ticket->setOrder($order);
 
-    	$this->assertEquals('0', $ticket->getPrice(), "Problème sur l'attribution du prix.");
-
-    	// BirthDate more than 65years -> Category senior -> 12.00€
-    	$birthDate = new \DateTime('65 years ago');
-    	$ticket->setBirthDate($birthDate);
-    	$ticket->setPrice();
-
-    	$this->assertEquals('1200', $ticket->getPrice(), "Problème sur le calcul du bon prix.");
+    	$this->assertNotNull($ticket->getOrder(), "Problème sur l'association du ticket à une commande.");
     }
 
-    public function testSetCommand()
+    public function testUser()
     {
-    	$ticket = new Ticket();
-    	$command = new Command();
+        $ticket = new Ticket();
 
-    	$ticket->setCommand($command);
-
-    	$this->assertNotNull($ticket->getCommand(), "Problème sur l'association du ticket à une commande.");
+        $this->assertEquals(false, $ticket->getUsed(), "Problème sur l'initialisation du status 'utilisé' du billet.");
     }
 }

@@ -80,6 +80,26 @@ class Order
   }
 
   /**
+   * Set orderDate
+   *
+   * @param \DateTime $orderDate
+   */
+  public function setOrderDate($orderDate)
+  {
+    $this->orderDate = $orderDate;
+  }
+
+  /**
+   * Get orderDate
+   *
+   * @return \DateTime
+   */
+  public function getOrderDate()
+  {
+    return $this->orderDate;
+  }
+
+  /**
    * Set mail
    *
    * @param string $mail
@@ -144,9 +164,9 @@ class Order
    *
    * @param boolean $paid
    */
-  public function setPaid()
+  public function setPaid($paid)
   {
-    $this->paid = true;
+    $this->paid = $paid;
     
     foreach ($this->tickets as $ticket) {
       $ticket->generateValidationCode();
