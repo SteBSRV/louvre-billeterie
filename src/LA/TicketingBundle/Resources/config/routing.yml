@@ -17,3 +17,4 @@ la_ticketing_confirm:
 la_ticketing_ticket_pdf:
     path:     /ticket/{id}
     defaults: { _controller: LATicketingBundle:Ticketing:generatePdf }
+    

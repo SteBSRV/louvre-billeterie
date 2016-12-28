@@ -1,4 +1,5 @@
 <?php
+// src/LA/TicketingBundle/Repository/TicketRepository.php
 
 namespace LA\TicketingBundle\Repository;
 

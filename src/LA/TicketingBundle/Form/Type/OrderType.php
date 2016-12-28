@@ -70,6 +70,4 @@ class OrderType extends AbstractType
     {
         return 'la_ticketingbundle_order';
     }
-
-
 }
