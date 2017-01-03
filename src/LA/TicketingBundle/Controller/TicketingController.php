@@ -20,8 +20,7 @@ class TicketingController extends Controller
             Ticket::PRICE_REDUCED => 'Réduit (nécessite un justificatif)',
             Ticket::PRICE_SENIOR => 'Sénior (à partir de 60 ans)',
             Ticket::PRICE_NORMAL => 'Normal',
-            )
-        ;
+        );
 
         // Récupérer les tarifs : 'const'
         return $this->render('LATicketingBundle:Ticketing:info.html.twig', compact('prices'));

@@ -9,33 +9,30 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StripePayment
 {
-	protected $order;
-	protected $token;
+	/**
+	 * @var EntityManager
+	 */
 	protected $em;
 	
 	public function __construct($stripe_key, EntityManager $em)
 	{
-		\Stripe\Stripe::setApiKey($stripe_key);// A completer avec parameters
+		\Stripe\Stripe::setApiKey($stripe_key);
 		$this->em = $em;
 	}
 
 	public function sendPayment(Order $order, Request $request)
 	{
         $order->setMail($request->get('stripeEmail'));
-        $this->token = $request->get('stripeToken');
 
         try {
             \Stripe\Charge::create(array(
                 'amount'      => $order->getTotalAmount(),
                 'currency'    => 'eur',
-                'source'      => $this->token,
+                'source'      => $request->get('stripeToken'),
                 'description' => 'Paiement des billets',
-                )
-            );
+            ));
         } catch(\Stripe\Error\Card $e) {
-        	$error = true;
-        	
-            return $error;
+            return $error = true;
 		}
 
 		$error = false;

@@ -186,9 +186,9 @@ class Order
   /**
    * Add ticket
    *
-   * @param \LA\TicketingBundle\Entity\Ticket $ticket
+   * @param Ticket $ticket
    */
-  public function addTicket(\LA\TicketingBundle\Entity\Ticket $ticket)
+  public function addTicket(Ticket $ticket)
   {
     $this->tickets[] = $ticket;
   }
@@ -196,9 +196,9 @@ class Order
   /**
    * Remove ticket
    *
-   * @param \LA\TicketingBundle\Entity\Ticket $ticket
+   * @param Ticket $ticket
    */
-  public function removeTicket(\LA\TicketingBundle\Entity\Ticket $ticket)
+  public function removeTicket(Ticket $ticket)
   {
     $this->tickets->removeElement($ticket);
   }
