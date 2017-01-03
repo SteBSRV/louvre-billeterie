@@ -21,34 +21,30 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('visitDate',         DateType::class, array(
+            ->add('visitDate',         DateType::class, [
                 'label' => 'Date de visite',
                 'data'  => new \Datetime(),
                 'years' => range(date('Y'), date('Y') + 2),
-                )
-            )
-            ->add('ticketsType',       ChoiceType::class, array(
-                'choices'  => array(
+            ])
+            ->add('ticketsType',       ChoiceType::class, [
+                'choices'  => [
                     'journée'      => 'journée',
                     'demi-journée' => 'demi-journée',
-                    ),
+                ],
                 'label'    => 'Type de billets'
-                )
-            )
-            ->add('nbTickets',         ChoiceType::class, array(
+            ])
+            ->add('nbTickets',         ChoiceType::class, [
                 'placeholder' => 'Choisir une quantité',
                 'choices'     => array_combine(range(1,10),range(1,10)),
                 'label'       => 'Nombre de ticket(s)',
                 'mapped'      => false,
-                )
-            )
-            ->add('tickets',           CollectionType::class, array(
+            ])
+            ->add('tickets',           CollectionType::class, [
                 'entry_type'   => TicketType::class,
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'label'        => 'Liste des tickets :'
-                )
-            )
+            ])
             ->add('Valider',              SubmitType::class)
         ;
     }

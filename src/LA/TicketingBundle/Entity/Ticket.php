@@ -5,6 +5,7 @@ namespace LA\TicketingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use LA\TicketingBundle\Entity\Order;
 
 /**
  * @ORM\Table(name="la_ticket")
@@ -238,7 +239,7 @@ class Ticket
    *
    * @param \LA\TicketingBundle\Entity\Order $order
    */
-  public function setOrder(\LA\TicketingBundle\Entity\Order $order)
+  public function setOrder(Order $order)
   {
     $this->order = $order;
   }
@@ -263,16 +264,6 @@ class Ticket
   public function getPrice()
   {
     $halfDay = $this->order->getTicketsType() == 'demi-journée';
-
-    if ($this->reduced) {
-      $price = self::PRICE_REDUCED;
-
-      if ($halfDay) {
-        return $price / 2;
-      }
-      return $price;
-    }
-
     $now = new \DateTime('now');
     $age = $now->diff($this->birthDate)->y;
 
@@ -280,6 +271,8 @@ class Ticket
       $price = self::PRICE_FREE;
     } elseif ($age < 12) {
       $price = self::PRICE_KID;
+    } elseif ($this->reduced) {
+      $price = self::PRICE_REDUCED;
     } elseif ($age > 60) {
       $price = self::PRICE_SENIOR;
     } else {

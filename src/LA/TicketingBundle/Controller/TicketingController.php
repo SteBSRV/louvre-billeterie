@@ -14,13 +14,13 @@ class TicketingController extends Controller
     public function infoAction()
     {
         // Array des différents tarifs
-        $prices = array(
+        $prices = [
             Ticket::PRICE_FREE => 'Gratuit (jusqu\'à 4ans)',
             Ticket::PRICE_KID => 'Enfant (jusqu\'à 12 ans)',
             Ticket::PRICE_REDUCED => 'Réduit (nécessite un justificatif)',
             Ticket::PRICE_SENIOR => 'Sénior (à partir de 60 ans)',
             Ticket::PRICE_NORMAL => 'Normal',
-        );
+        ];
 
         // Récupérer les tarifs : 'const'
         return $this->render('LATicketingBundle:Ticketing:info.html.twig', compact('prices'));
@@ -36,9 +36,9 @@ class TicketingController extends Controller
 
         if ($ticketRepo->getNbTicketsPerDay() >= 1000) {
             $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour une entrée aujourd\'hui ont été vendus.');
-            return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', array(
+            return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
@@ -51,7 +51,7 @@ class TicketingController extends Controller
             return $this->redirectToRoute('la_ticketing_buy', compact('id','order'));
         }
 
-        return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', array('form' => $form->createView()));
+        return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', ['form' => $form->createView()]);
     }
 
     public function orderBuyAction(Order $order, Request $request)
@@ -90,7 +90,7 @@ class TicketingController extends Controller
         $html = $this->renderView('LATicketingBundle:PDF:ticket.html.twig', compact('ticket','order'));
 
         // Création du PDF
-        $html2pdf = new \HTML2PDF('P',array('58','208'),'fr');
+        $html2pdf = new \HTML2PDF('P',['58','208'],'fr');
         $html2pdf->writeHTML($html);
 
         // Retour du PDF au navigateur

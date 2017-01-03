@@ -167,10 +167,6 @@ class Order
   public function setPaid($paid)
   {
     $this->paid = $paid;
-    
-    foreach ($this->tickets as $ticket) {
-      $ticket->generateValidationCode();
-    }
   }
 
   /**
@@ -248,6 +244,18 @@ class Order
   {
     foreach ($this->tickets as $ticket) {
       $ticket->setOrder($this);
+    }
+  }
+
+  /**
+   * Set paid to true
+   */
+  public function markAsPaid()
+  {
+    $this->paid = true;
+
+    foreach ($this->tickets as $ticket) {
+      $ticket->generateValidationCode();
     }
   }
 }

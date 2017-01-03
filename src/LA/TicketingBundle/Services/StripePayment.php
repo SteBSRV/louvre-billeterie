@@ -37,7 +37,7 @@ class StripePayment
 
 		$error = false;
 
-		$order->setPaid(true);
+		$order->markAsPaid();
         $this->em->persist($order);
         $this->em->flush();
 		

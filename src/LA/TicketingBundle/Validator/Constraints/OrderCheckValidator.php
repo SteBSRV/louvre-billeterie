@@ -6,6 +6,7 @@ namespace LA\TicketingBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ORM\EntityManager;
+use LA\TicketingBundle\Entity\Order;
 
 class OrderCheckValidator extends ConstraintValidator
 {
@@ -18,11 +19,16 @@ class OrderCheckValidator extends ConstraintValidator
 
 	public function validate($order, Constraint $constraint)
 	{
-        // Validation de la date de visite
-		$visitDate = $order->getVisitDate()->format('d-m');
-        $closedDays = array('01-05','01-11','25-12');
+		$this->dateIsValid($order->getVisitDate(), $constraint);
 
-        $year = $order->getVisitDate()->format('Y');
+        $this->fullDayValidation($order, $constraint);
+
+        $this->ticketsValidation($order, $constraint);   
+	}
+
+    public function getHolidayDays($orderVisitDate)
+    {
+        $year = $orderVisitDate->format('Y');
         $easterDate = new \DateTime();
         $easterDate = $easterDate->setTimestamp(easter_date($year));
         $easterMonday = $easterDate->modify('+1 day');
@@ -32,17 +38,30 @@ class OrderCheckValidator extends ConstraintValidator
         $pentecote = $easterDate->modify('+11 day');
         $pentecote = $pentecote->format('d-m');
 
-        $forbiddenDays = array('01-01',$easterMonday,'08-05',$ascension,$pentecote,'14-07','15-08','11-11');
+        return ['01-01',$easterMonday,'08-05',$ascension,$pentecote,'14-07','15-08','11-11'];
+    }
 
-        $visitDay = $order->getVisitDate()->format('N');
+    public function getClosedDays()
+    {
+        return ['01-05','01-11','25-12'];
+    }
+
+    public function dateIsValid($orderVisitDate, $constraint)
+    {
+        $visitDate = $orderVisitDate->format('d-m');
+        $visitDay = $orderVisitDate->format('N');
+        $closedDays = $this->getClosedDays();
+        $forbiddenDays = $this->getHolidayDays($orderVisitDate);
 
         if ($visitDay == 2 || in_array($visitDate, $closedDays)) {
             $this->context->buildViolation($constraint->messageClosedMuseum)->atPath('visitDate')->addViolation();
         } elseif ($visitDay == 7 || in_array($visitDate, $forbiddenDays)) {
             $this->context->buildViolation($constraint->messageClosedOrder)->atPath('visitDate')->addViolation();
         }
+    }
 
-        // Validation du type de billet pour le jour même
+    public function fullDayValidation(Order $order, $constraint)
+    {
         $now = new \DateTime('now');
         $today = $now->format('Y-m-d');
         $hour = $now->format('H');
@@ -52,8 +71,10 @@ class OrderCheckValidator extends ConstraintValidator
         if ($hour >= 14 && $ticketsType == 'journée' && ($visitDate == $today)) {
             $this->context->buildViolation($constraint->messageTooLateForFullDay)->atPath('ticketsType')->addViolation();
         }
+    }
 
-        // Validation des tickets
+    public function ticketsValidation(Order $order, $constraint)
+    {
         $tickets = $order->getTickets();
         $ticketsRepo = $this->em->getRepository('LATicketingBundle:Ticket');
         $nbTodayTickets = $ticketsRepo->getNbTicketsPerDay();
@@ -65,5 +86,5 @@ class OrderCheckValidator extends ConstraintValidator
         if (($nbTodayTickets + $order->getNbTickets()) > 1000) {
             $this->context->buildViolation($constraint->messageNoMoreTickets)->atPath('tickets')->addViolation();
         }
-	}
+    }
 }
