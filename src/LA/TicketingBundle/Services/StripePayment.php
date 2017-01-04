@@ -24,23 +24,15 @@ class StripePayment
 	{
         $order->setMail($request->get('stripeEmail'));
 
-        try {
-            \Stripe\Charge::create(array(
-                'amount'      => $order->getTotalAmount(),
-                'currency'    => 'eur',
-                'source'      => $request->get('stripeToken'),
-                'description' => 'Paiement des billets',
-            ));
-        } catch(\Stripe\Error\Card $e) {
-            return $error = true;
-		}
-
-		$error = false;
+        \Stripe\Charge::create(array(
+            'amount'      => $order->getTotalAmount(),
+            'currency'    => 'eur',
+            'source'      => $request->get('stripeToken'),
+            'description' => 'Paiement des billets',
+        ));
 
 		$order->markAsPaid();
         $this->em->persist($order);
         $this->em->flush();
-		
-		return $error;
 	}
 }

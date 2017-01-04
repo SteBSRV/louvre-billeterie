@@ -60,17 +60,19 @@ class TicketingController extends Controller
 
             $payment = $this->get('la_ticketing.stripe_payment');
 
-            if ($payment->sendPayment($order, $request)) {
+            try {
+                $payment->sendPayment($order, $request);
+            } catch (Exception $e) {
                 $request->getSession()->getFlashBag()->add('error','La carte saisie n\'est pas valide');
 
                 $id = $order->getId();
                 return $this->redirectToRoute('la_ticketing_buy', compact('id'));
-            } else {
-                $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
-
-                $id = $order->getId();
-                return $this->redirectToRoute('la_ticketing_confirm', compact('id'));
             }
+            
+            $request->getSession()->getFlashBag()->add('success', 'Paiement validé, vous allez recevoir d\'ici quelques secondes un mail de confirmation accompagné des billets');
+
+            $id = $order->getId();
+            return $this->redirectToRoute('la_ticketing_confirm', compact('id'));
         }
         // Création du formumlaire de paiement + Récap commande
         return $this->render('LATicketingBundle:Ticketing:order_buy.html.twig', compact('order'));
