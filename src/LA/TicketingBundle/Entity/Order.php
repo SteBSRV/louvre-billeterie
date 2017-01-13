@@ -252,10 +252,10 @@ class Order
    */
   public function markAsPaid()
   {
-    if($this->paid == true) {
+    if($this->paid === true) {
       return;
     }
-    
+
     $this->paid = true;
 
     foreach ($this->tickets as $ticket) {
