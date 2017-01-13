@@ -15,5 +15,4 @@ services:
         arguments:
             - "%stripe_key%"
             - "@doctrine.orm.entity_manager"
-
   
