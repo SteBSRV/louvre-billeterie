@@ -23,7 +23,7 @@ class OrderCheckValidator extends ConstraintValidator
 
         $this->fullDayValidation($order, $constraint);
 
-        $this->ticketsValidation($order, $constraint);   
+        $this->ticketsNumberValidation($order, $constraint);   
 	}
 
     public function getHolidayDays($orderVisitDate)
@@ -73,7 +73,7 @@ class OrderCheckValidator extends ConstraintValidator
         }
     }
 
-    public function ticketsValidation(Order $order, $constraint)
+    public function ticketsNumberValidation(Order $order, $constraint)
     {
         $tickets = $order->getTickets();
         $ticketsRepo = $this->em->getRepository('LATicketingBundle:Ticket');

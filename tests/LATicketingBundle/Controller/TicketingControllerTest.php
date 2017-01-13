@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TicketingControllerTest extends WebTestCase
 {
-    public function testInfo()
+    public function test_check_info()
     {
         $client = static::createClient();
 
@@ -17,7 +17,7 @@ class TicketingControllerTest extends WebTestCase
         $this->assertContains('Prix : 10€', $client->getResponse()->getContent());
     }
 
-    public function testOrderCreate()
+    public function test_order_create()
     {
     	$client = static::createClient();
     	$client->followRedirects(true);

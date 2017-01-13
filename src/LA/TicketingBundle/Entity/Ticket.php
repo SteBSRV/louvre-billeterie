@@ -263,7 +263,6 @@ class Ticket
    */
   public function getPrice()
   {
-    $halfDay = $this->order->getTicketsType() == 'demi-journée';
     $now = new \DateTime('now');
     $age = $now->diff($this->birthDate)->y;
 
@@ -279,7 +278,7 @@ class Ticket
       $price = self::PRICE_NORMAL;
     }
 
-    if ($halfDay) {
+    if ($this->order->getTicketsType() === 'demi-journée') {
       return $price / 2;
     }
     return $price;

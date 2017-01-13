@@ -8,7 +8,7 @@ use LA\TicketingBundle\Entity\Order;
 
 class TicketTest extends \PHPUnit_Framework_TestCase
 {
-    public function testPrices()
+    public function test_prices_configuration()
     {
         $order = new Order();
         $order->setTicketsType('journée');
@@ -28,7 +28,7 @@ class TicketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1000, $ticket->getPrice(), "Problème sur le calcul du tarif réduit.");
     }
 
-    public function testValidationCode()
+    public function test_validation_code_generation()
     {
     	$ticket = new Ticket();
     	$ticket->generateValidationCode();
@@ -36,7 +36,7 @@ class TicketTest extends \PHPUnit_Framework_TestCase
     	$this->assertNotNull($ticket->getValidationCode(), "Problème sur la création du code de validation.");
     }
 
-    public function testOrder()
+    public function test_ticket_to_order_check()
     {
     	$ticket = new Ticket();
     	$order = new Order();
@@ -46,7 +46,7 @@ class TicketTest extends \PHPUnit_Framework_TestCase
     	$this->assertNotNull($ticket->getOrder(), "Problème sur l'association du ticket à une commande.");
     }
 
-    public function testUsed()
+    public function test_ticket_init_status_used()
     {
         $ticket = new Ticket();
 
