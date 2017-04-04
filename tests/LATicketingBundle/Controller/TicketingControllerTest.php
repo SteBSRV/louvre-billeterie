@@ -31,7 +31,7 @@ class TicketingControllerTest extends WebTestCase
 				'visitDate'   => array(
 					'day'   => 24,
 					'month' => 03,
-					'year'  => 2017,
+					'year'  => 2018,
 				),
 				'ticketsType' => 'journée',
 				'nbTickets'   => 1,
@@ -53,6 +53,6 @@ class TicketingControllerTest extends WebTestCase
 
 		$client->request($form->getMethod(), $form->getUri(), $values);
 
-    	$this->assertContains('Commande valide.', $client->getResponse()->getContent());
+    	$this->assertContains('Commande valide', $client->getResponse()->getContent());
     }
 }
