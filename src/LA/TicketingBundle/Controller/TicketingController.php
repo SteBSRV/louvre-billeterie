@@ -35,7 +35,7 @@ class TicketingController extends Controller
         $form = $this->get('form.factory')->create(OrderType::class, $order);
 
         if ($ticketRepo->getNbTicketsPerDay() >= 1000) {
-            $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour une entrée aujourd\'hui ont été vendus.');
+            $request->getSession()->getFlashBag()->add('warning','Tous les tickets pour aujourd\'hui ont été vendus.');
             return $this->render('LATicketingBundle:Ticketing:order_create.html.twig', [
                 'form' => $form->createView(),
             ]);

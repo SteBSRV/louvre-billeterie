@@ -1,0 +1,49 @@
+#header{
+  background-image: url('../../bundles/laapp/img/header-bg.jpg');
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  text-align: center;
+  height: 300px;
+}
+
+#header-content{
+  margin-top: 100px;
+  background: rgba(22, 22, 22, 0.5);
+  color: #ffffff;
+  border: 2px solid white;
+}
+
+.badge{
+  background-color: #515151;
+  color: #ffffff;
+}
+
+.badge a{
+  color: white;
+}
+
+.ticket-number{
+  background-color: #515151;
+  color: #ffffff;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-right: 10px;
+}
+
+.stripe-button{
+  margin-bottom: 50px;
+}
+
+#la_ticketingbundle_order_tickets{
+  margin-left: 10%;
+  list-style: none;
+}
+
+#la_ticketingbundle_order_tickets hr{
+  border-color: #121212;
+}
